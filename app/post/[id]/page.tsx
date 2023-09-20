@@ -19,7 +19,7 @@ export default async function Post({ params }) {
       <div className="bg-gray-600 flex flex-row max-h-[400px] shadow-2xl border my-1">
         <div className="flex flex-col items-center bg-gray-600 w-[200px]">
           <img
-            className="flex justify-center rounded-full max-w-[100px] max-h-[100px] border border-blue-500"
+            className="flex justify-center rounded-full max-w-[100px] max-h-[100px] border border-orange-500"
             src={post.author.image}
             alt="userpic"
           ></img>
@@ -29,7 +29,7 @@ export default async function Post({ params }) {
           </h2>
         </div>
         <div className="flex flex-col bg-gray-400 w-[500px]">
-          <h6 className="flex text-blue-700 text-xl justify-center bg-slate-500">
+          <h6 className="flex text-orange-500 text-xl justify-center bg-slate-500">
             {post.title} - Post Nº{post.id}
           </h6>
           <h4 className="flex p-3">{post.description}</h4>
@@ -43,7 +43,7 @@ export default async function Post({ params }) {
           <div className="bg-gray-600 flex flex-row max-h-[400px] shadow-2xl border my-1">
             <div className="flex flex-col items-center bg-gray-600 w-[200px]">
               <img
-                className="flex justify-center rounded-full max-w-[100px] max-h-[100px] border border-blue-500"
+                className="flex justify-center rounded-full max-w-[100px] max-h-[100px] border border-orange-500"
                 src={e.author.image}
                 alt="commentpic"
               ></img>

@@ -6,12 +6,13 @@ export async function ListOfPosts() {
     return fetch(`${URL}/post`).then((res) => res.json());
   };
 
+
   const posts = await fetchPost();
-  console.log(posts, "asd");
+
   return (
     <div className="flex flex-row">
       <div className="flex flex-col max-w-[250px]">
-        <h6 className="flex justify-center font-bold text-2xl text-blue-700">
+        <h6 className="flex justify-center font-bold text-2xl text-orange-700">
           Nuevos Post
         </h6>
         {posts.post.map((e) => {
@@ -30,7 +31,7 @@ export async function ListOfPosts() {
                     className="flex max-w-[40px] max-h-[40px] mx-2"
                   ></img>
                   Creador{" "}
-                  <span className="flex text-blue-800">
+                  <span className="flex text-orange-800">
                     {" "}
                     {e.author.userName}
                   </span>
@@ -41,7 +42,7 @@ export async function ListOfPosts() {
         })}
       </div>
       <div className="flex flex-col max-w-[250px]">
-        <h6 className="flex justify-center font-bold text-2xl text-blue-700">
+        <h6 className="flex justify-center font-bold text-2xl text-orange-700">
           Programacion
         </h6>
         {posts.programacion.map((e) => {
@@ -60,7 +61,7 @@ export async function ListOfPosts() {
                     className="flex max-w-[40px] max-h-[40px] mx-2"
                   ></img>
                   Creador{" "}
-                  <span className="flex text-blue-800">
+                  <span className="flex text-orange-800">
                     {" "}
                     {e.author.userName}
                   </span>
@@ -71,7 +72,7 @@ export async function ListOfPosts() {
         })}
       </div>
       <div className="flex flex-col max-w-[250px]">
-        <h6 className="flex justify-center font-bold text-2xl text-blue-700">
+        <h6 className="flex justify-center font-bold text-2xl text-orange-700">
           Empleos
         </h6>
         {posts.empleos.map((e) => {
@@ -90,7 +91,7 @@ export async function ListOfPosts() {
                     className="flex max-w-[40px] max-h-[40px] mx-2"
                   ></img>
                   Creador{" "}
-                  <span className="flex text-blue-800">
+                  <span className="flex text-orange-800">
                     {" "}
                     {e.author.userName}
                   </span>
@@ -101,7 +102,7 @@ export async function ListOfPosts() {
         })}
       </div>
       <div className="flex flex-col max-w-[250px]">
-        <h6 className="flex justify-center font-bold text-2xl text-blue-700">
+        <h6 className="flex justify-center font-bold text-2xl text-orange-700">
           Cursos/Educacion
         </h6>
         {posts.educacion.map((e) => {
@@ -120,7 +121,7 @@ export async function ListOfPosts() {
                     className="flex max-w-[40px] max-h-[40px] mx-2"
                   ></img>
                   Creador{" "}
-                  <span className="flex text-blue-800">
+                  <span className="flex text-orange-800">
                     {" "}
                     {e.author.userName}
                   </span>
