@@ -30,13 +30,11 @@ export function Navigation() {
   useEffect(() => {
     if (typeof window !== "undefined") {
       const storage = localStorage.getItem("user");
-      console.log(storage, "st");
       const isConnected = storage && storage.length > 1;
       if (isConnected) {
         const parsedUserData = JSON.parse(storage);
         setUserData(parsedUserData);
       }
-
       setConnected(!!isConnected);
     }
   }, []);
@@ -51,9 +49,11 @@ export function Navigation() {
             <div className="text-white font-bold text-xl mr-8">LOGO</div>
           </Link>
         </div>
-        <div className="flex space-x-4">
+        <div className="flex items-center space-x-4">
           <div className="relative group">
-            <div
+            <Link
+              href="/section/programacion"
+              as={`/section/programacion`}
               onMouseEnter={() => {
                 setOpen1(true);
                 setOpen2(false);
@@ -63,7 +63,7 @@ export function Navigation() {
               className="cursor-pointer text-white hover:text-orange-700 p-2 rounded"
             >
               Programacion
-            </div>
+            </Link>
             <div
               onMouseLeave={() => setOpen1(false)}
               className={`${
@@ -82,7 +82,9 @@ export function Navigation() {
             </div>
           </div>
           <div className="relative group">
-            <div
+            <Link
+              href="/section/empleos"
+              as={`/section/empleos`}
               onMouseEnter={() => {
                 setOpen1(false);
                 setOpen2(true);
@@ -92,7 +94,7 @@ export function Navigation() {
               className="cursor-pointer text-white hover:text-orange-700 p-2 rounded"
             >
               Empleos
-            </div>
+            </Link>
             <div
               onMouseLeave={() => setOpen2(false)}
               className={`${
@@ -108,7 +110,9 @@ export function Navigation() {
           </div>
 
           <div className="relative group">
-            <div
+            <Link
+              href="/section/educacion"
+              as={`/section/educacion`}
               onMouseEnter={() => {
                 setOpen1(false);
                 setOpen2(false);
@@ -118,7 +122,7 @@ export function Navigation() {
               className="cursor-pointer text-white hover:text-orange-700 p-2 rounded"
             >
               Educacion
-            </div>
+            </Link>
             <div
               onMouseLeave={() => setOpen4(false)}
               className={`${
@@ -148,19 +152,24 @@ export function Navigation() {
               </>
             ) : (
               <div className="relative group">
-                <div
-                  onMouseEnter={() => {
-                    setOpen1(false);
-                    setOpen2(false);
-                    setOpen3(true);
-                    setOpen4(false);
-                  }}
-                  className="cursor-pointer text-white p-2 rounded"
-                >
-                  <img
-                    src={userData.image}
-                    className="flex border-2 border-orange-600 max-w-[40px] max-h-[40px]"
-                  ></img>
+                <div className="flex flex-row">
+                  <button className="flex items-center justify-center mr-2 hover:underline text-orange-600">
+                    Crear Post
+                  </button>
+                  <div
+                    onMouseEnter={() => {
+                      setOpen1(false);
+                      setOpen2(false);
+                      setOpen3(true);
+                      setOpen4(false);
+                    }}
+                    className="cursor-pointer text-white p-2 rounded"
+                  >
+                    <img
+                      src={userData.image}
+                      className="flex border-2 border-orange-600 max-w-[40px] max-h-[40px]"
+                    ></img>
+                  </div>
                 </div>
                 <div
                   onMouseLeave={() => setOpen3(false)}

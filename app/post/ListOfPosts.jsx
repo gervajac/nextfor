@@ -6,7 +6,6 @@ export async function ListOfPosts() {
     return fetch(`${URL}/post`).then((res) => res.json());
   };
 
-
   const posts = await fetchPost();
 
   return (
@@ -19,7 +18,7 @@ export async function ListOfPosts() {
           return (
             <div className="flex flex-col bg-gray-700 border border-gray-600 shadow-2xl p-1">
               <Link href="/posts/id" as={`/post/${e.id}`}>
-                <h3 className="flex justify-center text-xl underline bg-slate-500 p-1">
+                <h3 className="flex justify-center text-xl underline hover:text-orange-500 bg-slate-500 p-1">
                   {e.title}
                 </h3>
                 <h1 className="flex text-sm justify-center items-center my-4 p-1">
@@ -31,7 +30,7 @@ export async function ListOfPosts() {
                     className="flex max-w-[40px] max-h-[40px] mx-2"
                   ></img>
                   Creador{" "}
-                  <span className="flex text-orange-800">
+                  <span className="flex text-orange-600">
                     {" "}
                     {e.author.userName}
                   </span>
@@ -49,7 +48,7 @@ export async function ListOfPosts() {
           return (
             <div className="flex flex-col bg-gray-700 border border-gray-600 shadow-2xl p-1">
               <Link href="/posts/id" as={`/post/${e.id}`}>
-                <h3 className="flex justify-center text-xl underline bg-slate-500 p-1">
+                <h3 className="flex justify-center text-xl underline hover:text-orange-500 bg-slate-500 p-1">
                   {e.title}
                 </h3>
                 <h1 className="flex text-sm justify-center items-center my-4 p-1">
@@ -61,7 +60,7 @@ export async function ListOfPosts() {
                     className="flex max-w-[40px] max-h-[40px] mx-2"
                   ></img>
                   Creador{" "}
-                  <span className="flex text-orange-800">
+                  <span className="flex text-orange-600">
                     {" "}
                     {e.author.userName}
                   </span>
@@ -79,7 +78,7 @@ export async function ListOfPosts() {
           return (
             <div className="flex flex-col bg-gray-700 border border-gray-600 shadow-2xl p-1">
               <Link href="/posts/id" as={`/post/${e.id}`}>
-                <h3 className="flex justify-center text-xl underline bg-slate-500 p-1">
+                <h3 className="flex justify-center text-xl underline hover:text-orange-500 bg-slate-500 p-1">
                   {e.title}
                 </h3>
                 <h1 className="flex text-sm justify-center items-center my-4 p-1">
@@ -91,7 +90,7 @@ export async function ListOfPosts() {
                     className="flex max-w-[40px] max-h-[40px] mx-2"
                   ></img>
                   Creador{" "}
-                  <span className="flex text-orange-800">
+                  <span className="flex text-orange-600">
                     {" "}
                     {e.author.userName}
                   </span>
@@ -109,7 +108,7 @@ export async function ListOfPosts() {
           return (
             <div className="flex flex-col bg-gray-700 border border-gray-600 shadow-2xl p-1">
               <Link href="/posts/id" as={`/post/${e.id}`}>
-                <h3 className="flex justify-center text-xl underline bg-slate-500 p-1">
+                <h3 className="flex justify-center text-xl underline hover:text-orange-500 bg-slate-500 p-1">
                   {e.title}
                 </h3>
                 <h1 className="flex text-sm justify-center items-center my-4 p-1">
@@ -121,7 +120,7 @@ export async function ListOfPosts() {
                     className="flex max-w-[40px] max-h-[40px] mx-2"
                   ></img>
                   Creador{" "}
-                  <span className="flex text-orange-800">
+                  <span className="flex text-orange-600">
                     {" "}
                     {e.author.userName}
                   </span>
