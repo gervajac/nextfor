@@ -153,9 +153,13 @@ export function Navigation() {
             ) : (
               <div className="relative group">
                 <div className="flex flex-row">
-                  <button className="flex items-center justify-center mr-2 hover:underline text-orange-600">
+                  <Link
+                    href="/post/create"
+                    as={`/post/create`}
+                    className="flex items-center justify-center mr-2 hover:underline text-orange-600"
+                  >
                     Crear Post
-                  </button>
+                  </Link>
                   <div
                     onMouseEnter={() => {
                       setOpen1(false);

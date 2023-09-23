@@ -18,11 +18,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>NEXTJSAPP</title>
+        <title>ForoARdev</title>
       </head>
-      <body className={inter.className}>
+      <body className="flex flex-col bg-gray-800">
         <Navigation />
-        {children}
+        <div className="flex-grow">{children}</div>
       </body>
     </html>
   );

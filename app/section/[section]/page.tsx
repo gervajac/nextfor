@@ -11,7 +11,7 @@ const fetchSection = async (section: any) => {
   }
 };
 
-export default async function SectionListing({ params }) {
+export default async function SectionListing({ params }: any) {
   const { section } = params;
   console.log(section);
   const sectionData = await fetchSection(section);
@@ -23,9 +23,9 @@ export default async function SectionListing({ params }) {
           <div className="flex flex-row justify-between w-full">
             <h6 className="flex text-2xl m-3">Programación</h6>
             <div className="flex mr-4">
-              <button className="rounded-xl bg-orange-700 my-2 p-2">
+              <Link href={`/post/create`} className="rounded-xl bg-orange-700 my-2 p-2">
                 Crear POST
-              </button>
+              </Link>
             </div>
           </div>
           <h6 className="flex ml-2">

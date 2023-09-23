@@ -1,6 +1,6 @@
-export default function PostsLayout({ children }) {
+export default function PostsLayout({ children }: any) {
   return (
-    <div className="flex justify-center bg-gray-800 h-screen">
+    <div className="flex justify-center h-screen">
       {children}
     </div>
   );
