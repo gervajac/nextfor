@@ -23,11 +23,12 @@ export function Navigation() {
   const [open2, setOpen2] = useState(false);
   const [open3, setOpen3] = useState(false);
   const [open4, setOpen4] = useState(false);
-
   const [connected, setConnected] = useState(false);
   const [userData, setUserData] = useState({});
 
   useEffect(() => {
+    const ruta = window.location.href;
+    console.log(ruta, "ruitacautla");
     if (typeof window !== "undefined") {
       const storage = localStorage.getItem("user");
       const isConnected = storage && storage.length > 1;
@@ -170,7 +171,7 @@ export function Navigation() {
                     className="cursor-pointer text-white p-2 rounded"
                   >
                     <img
-                      src={userData.image}
+                      src="https://toppng.com/uploads/preview/vu-thi-ha-user-pro-icon-115534024853ae3gswzwd.png"
                       className="flex border-2 border-orange-600 max-w-[40px] max-h-[40px]"
                     ></img>
                   </div>
@@ -182,9 +183,9 @@ export function Navigation() {
                   } bg-orange-400 absolute mt-2 shadow-md rounded min-w-[80px] w-auto`}
                 >
                   <div className="flex flex-col">
-                    <button className="cursor-pointer text-black hover:text-white">
+                    <Link href="/perfil" className="cursor-pointer text-black hover:text-white">
                       Perfil
-                    </button>
+                    </Link>
                     <button className="cursor-pointer text-black hover:text-white">
                       Muro
                     </button>

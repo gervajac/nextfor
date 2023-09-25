@@ -29,8 +29,7 @@ export default function Login() {
       },
     });
     const jsonResponse = await resp.json();
-    console.log("?")
-    console.log(jsonResponse)
+    console.log(jsonResponse, "respppp")
     if (jsonResponse.status !== 404) {
       localStorage.setItem("user", JSON.stringify(jsonResponse.user));
       window.location.href = "/post";

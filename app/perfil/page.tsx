@@ -7,6 +7,13 @@ import { redirect } from "next/navigation";
 export default function Perfil() {
   const [successMsg, setSuccessMsg] = useState(false);
   const [errorMsg, setErrorMsg] = useState(false);
+  const [userData, setUserData] = useState({
+    userName: "",
+    image: "",
+    mail: "",
+    password: "",
+    createdAt: "",
+  });
   const [postData, setpostData] = useState({
     title: "",
     image: [""],
@@ -20,6 +27,7 @@ export default function Perfil() {
     if (item !== null) {
       const parsedUserData = JSON.parse(item);
       postData.authorId = parsedUserData.id;
+      setUserData(parsedUserData);
     } else {
       console.log(
         "No se encontraron datos de usuario en el almacenamiento local"
@@ -66,7 +74,16 @@ export default function Perfil() {
 
   return (
     <div className="flex justify-center flex-row bg-gray-500 h-screen space-x-2">
-      <div className="flex flex-col items-center w-[200px] h-[400px] bg-gray-600 shadow-lg border border-orange-600 my-2"></div>
+      <div className="flex flex-col items-center w-[200px] h-[400px] bg-gray-600 shadow-lg border border-orange-600 my-2">
+        <img
+          className="flex items-center mt-2 max-w-[60px] max-h-[60px] rounded"
+          src={userData.image}
+        ></img>
+        <h5 className="flex items-center font-semibold text-black">
+          {userData.userName}
+        </h5>
+        <h4>{userData.createdAt.slice(0, 10)}</h4>
+      </div>
       <div className="flex flex-col w-[500px] h-auto min-h-screen bg-gray-600 shadow-lg border border-orange-600 my-2">
         <h6 className="flex justify-center items-center font-bold text-3xl text-black">
           Información Personal
