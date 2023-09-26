@@ -13,6 +13,15 @@ export default function Perfil() {
     mail: "",
     password: "",
     createdAt: "",
+    sex: "",
+    fullName: "",
+    profession: "",
+    job: "",
+    university: "",
+    career: "",
+    city: "",
+    province: "",
+    country: "",
   });
   const [postData, setpostData] = useState({
     title: "",
@@ -37,40 +46,31 @@ export default function Perfil() {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setpostData({ ...postData, [name]: value });
-  };
-
-  const handleTextAreaChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    const { name, value } = event.target;
-    setpostData({ ...postData, [name]: value });
+    setUserData({ ...userData, [name]: value });
   };
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target;
-    setpostData({ ...postData, [name]: value });
+    setUserData({ ...userData, [name]: value });
   };
 
   const handleVerification = async () => {
-    const resp = await fetch(`${URL}/post`, {
-      method: "POST",
-      body: JSON.stringify(postData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const jsonResponse = await resp.json();
-    console.log("?");
-    console.log(jsonResponse);
-    if (jsonResponse.status !== 404) {
-      console.log("post creado con exito");
+    console.log(userData, "userdatanates");
+    const resp = await axios.patch(
+      `${URL}/user/${postData.authorId}`,
+      userData
+    );
+
+    if (resp.status !== 404) {
+      console.log(resp, "respuesta");
+      console.log("Usuario actualizado");
     } else {
       setErrorMsg(true);
+      console.log("error");
     }
   };
 
-  console.log(postData, "dat");
+  console.log(userData, "dat");
 
   return (
     <div className="flex justify-center flex-row bg-gray-500 h-screen space-x-2">
@@ -97,6 +97,8 @@ export default function Perfil() {
               Nombre
             </label>
             <input
+              name="fullName"
+              onChange={(e) => handleInputChange(e)}
               placeholder="Nombre completo"
               className="flex rounded shadow-md w-auto h-[30px] bg-slate-400 placeholder:text-black"
             ></input>
@@ -106,11 +108,20 @@ export default function Perfil() {
               Sexo
             </label>
             <select
+              name="sex"
+              onChange={(e) => handleSelectChange(e)}
               placeholder="Sexo"
               className="flex rounded shadow-md w-auto h-[30px] bg-slate-400 placeholder:text-black"
             >
-              <option className="text-black">Masculino</option>
-              <option className="text-black">Femenino</option>
+              <option disabled className="text-black">
+                Sex
+              </option>
+              <option value="Masculino" className="text-black">
+                Masculino
+              </option>
+              <option value="Femenino" className="text-black">
+                Femenino
+              </option>
             </select>
           </div>
           <div>
@@ -122,6 +133,8 @@ export default function Perfil() {
                 Profesión
               </label>
               <input
+                name="profession"
+                onChange={(e) => handleInputChange(e)}
                 placeholder="Profesion"
                 className="flex rounded shadow-md w-auto h-[30px] bg-slate-400 placeholder:text-black"
               ></input>
@@ -131,6 +144,8 @@ export default function Perfil() {
                 Puesto Laboral
               </label>
               <input
+                name="job"
+                onChange={(e) => handleInputChange(e)}
                 placeholder="Puesto laboral"
                 className="flex rounded shadow-md w-auto h-[30px] bg-slate-400 placeholder:text-black"
               ></input>
@@ -145,6 +160,8 @@ export default function Perfil() {
                 Universidad/BoothCamp
               </label>
               <input
+                name="university"
+                onChange={(e) => handleInputChange(e)}
                 placeholder="Universidad"
                 className="flex rounded shadow-md w-auto h-[30px] bg-slate-400 placeholder:text-black"
               ></input>
@@ -154,6 +171,8 @@ export default function Perfil() {
                 Carrera
               </label>
               <input
+                name="career"
+                onChange={(e) => handleInputChange(e)}
                 placeholder="Carrera"
                 className="flex rounded shadow-md w-auto h-[30px] bg-slate-400 placeholder:text-black"
               ></input>
@@ -168,6 +187,8 @@ export default function Perfil() {
                 Ciudad
               </label>
               <input
+                name="city"
+                onChange={(e) => handleInputChange(e)}
                 placeholder="Ciudad"
                 className="flex rounded shadow-md w-auto h-[30px] bg-slate-400 placeholder:text-black"
               ></input>
@@ -177,6 +198,8 @@ export default function Perfil() {
                 Provincia
               </label>
               <input
+                name="province"
+                onChange={(e) => handleInputChange(e)}
                 placeholder="Provincia"
                 className="flex rounded shadow-md w-auto h-[30px] bg-slate-400 placeholder:text-black"
               ></input>
@@ -186,6 +209,8 @@ export default function Perfil() {
                 País
               </label>
               <input
+                name="country"
+                onChange={(e) => handleInputChange(e)}
                 placeholder="País"
                 className="flex rounded shadow-md w-auto h-[30px] bg-slate-400 placeholder:text-black"
               ></input>
@@ -193,7 +218,10 @@ export default function Perfil() {
           </div>
         </div>
         <div className="flex justify-end items-end mr-2 mt-2">
-          <button className="rounded w-[150px] text-black font-semibold bg-slate-700 h-auto p-2 border-2 border-orange-700">
+          <button
+            onClick={() => handleVerification()}
+            className="rounded w-[150px] text-black font-semibold bg-slate-700 h-auto p-2 border-2 border-orange-700"
+          >
             Actualizar Información
           </button>
         </div>

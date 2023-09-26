@@ -14,8 +14,16 @@ export default function Perfil({ params }: any) {
     userName: "",
     image: "",
     mail: "",
-    password: "",
     createdAt: "",
+    sex: "",
+    fullName: "",
+    profession: "",
+    job: "",
+    university: "",
+    career: "",
+    city: "",
+    province: "",
+    country: "",
   });
 
   useEffect(() => {
@@ -38,11 +46,7 @@ export default function Perfil({ params }: any) {
         if (resp.data.status === 404) {
           console.log("usuaruio no encontrado");
         } else {
-          setUserData({
-            userName: resp.data.userName,
-            image: resp.data.image,
-            createdAt: resp.data.createdAt,
-          });
+          setUserData(resp.data);
           setPost(resp.data.posts);
         }
       } catch (error) {
@@ -54,7 +58,7 @@ export default function Perfil({ params }: any) {
     fetchUserData();
   }, [params]);
 
-  console.log(post, "postss");
+  console.log(userData, "postss");
   return (
     <div className="flex justify-center flex-row bg-gray-500 h-screen space-x-2">
       <div className="flex flex-col items-center w-[200px] h-[400px] bg-gray-600 shadow-lg border border-orange-600 my-2">
@@ -62,12 +66,50 @@ export default function Perfil({ params }: any) {
           className="flex items-center mt-2 max-w-[60px] max-h-[60px] rounded"
           src={userData.image}
         ></img>
-        <h5 className="flex items-center font-semibold text-black">
-          {userData.userName}
-        </h5>
-        <h4>{userData.createdAt.slice(0, 10)}</h4>
+        {userData.userName && (
+          <h5 className="flex items-center font-semibold text-black">
+            {userData.userName}
+          </h5>
+        )}
+        <div className="flex flex-col justify-center ml-1 items-start">
+          {userData.fullName && (
+            <span>
+              Nombre: <span className="font-semibold">{userData.fullName}</span>
+            </span>
+          )}
+          {userData.profession && (
+            <span>
+              Profesión:{" "}
+              <span className="font-semibold">{userData.profession}</span>
+            </span>
+          )}
+          {userData.job && (
+            <span>
+              Trabajo: <span className="font-semibold">{userData.job}</span>
+            </span>
+          )}
+          {userData.city && (
+            <span>
+              Ciudad: <span className="font-semibold">{userData.city}</span>
+            </span>
+          )}
+          {userData.province && (
+            <span>
+              Provincia:{" "}
+              <span className="font-semibold">{userData.province}</span>
+            </span>
+          )}
+          {userData.country && (
+            <span>
+              País: <span className="font-semibold">{userData.country}</span>
+            </span>
+          )}
+        </div>
+        <h4 className="flex justify-end font-semibold">
+          {userData.createdAt.slice(0, 10)}
+        </h4>
       </div>
-      <div className="flex flex-col w-[500px] h-auto min-h-screen bg-gray-600 shadow-lg border border-orange-600 my-2">
+      <div className="flex flex-col w-[650px] h-auto min-h-screen bg-gray-600 shadow-lg border border-orange-600 my-2">
         <div className="flex justify-start items-center flex-col bg-gray-700 w-full h-full">
           <div className="flex flex-row justify-around space-x-2 w-full h-[40px] bg-slate-600 border-2 border-gray-800">
             <button
@@ -88,31 +130,46 @@ export default function Perfil({ params }: any) {
                   : "flex w-full justify-center items-center"
               }
             >
-              Información Personal
+              Comentar Perfil
             </button>
           </div>
-          {post.map((e: any) => {
-            return (
-              <div className="flex flex-row w-full h-[100px] bg-slate-600 border-2 border-gray-800">
-                <div className="flex w-auto ml-1 justify-center items-center">
-                  {e.section}
+
+          {active ? (
+            post.map((e: any) => {
+              return (
+                <div className="flex flex-row w-full h-[100px] bg-slate-600 border-2 border-gray-800">
+                  <div className="flex w-auto ml-1 justify-center items-center">
+                    {e.section}
+                  </div>
+                  <div className="flex w-[700px] justify-center flex-col items-start ml-4">
+                    <Link href="/posts/id" as={`/post/${e.id}`}>
+                      <h5 className="text-xl hover:text-orange-700">
+                        {e.title}
+                      </h5>
+                    </Link>
+                    <h2 className="flex flex-row justify-start items-start text-orange-500">
+                      <span className="flex text-orange-700">
+                        {userData.userName}
+                      </span>
+                      <span className="flex text-white">
+                        {e.createdAt.slice(0, 10)}
+                      </span>
+                    </h2>
+                  </div>
                 </div>
-                <div className="flex w-[700px] justify-center flex-col items-start ml-4">
-                  <Link href="/posts/id" as={`/post/${e.id}`}>
-                    <h5 className="text-xl hover:text-orange-700">{e.title}</h5>
-                  </Link>
-                  <h2 className="flex flex-row justify-start items-start text-orange-500">
-                    <span className="flex text-orange-700">
-                      {userData.userName}
-                    </span>
-                    <span className="flex text-white">
-                      {e.createdAt.slice(0, 10)}
-                    </span>
-                  </h2>
-                </div>
+              );
+            })
+          ) : (
+            <div className="flex flex-col w-full h-full bg-slate-600 border-2 border-gray-800">
+              <div className="flex w-auto h-20 ml-1 bg-slate-700 justify-center items-center">
+                Aún no hay comentarios en el perfil de {userData.userName}
               </div>
-            );
-          })}
+              <div className="flex flex-row w-auto ml-1 justify-center items-center">
+                <textarea className="flex w-full border border-orange-700 h-full bg-slate-500"></textarea>
+                <button className="flex justify-center items-center h-full w-[90px] bg-orange-700">Comentar</button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
