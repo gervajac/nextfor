@@ -8,6 +8,15 @@ import Link from "next/link";
 export default function Perfil({ params }: any) {
   const [successMsg, setSuccessMsg] = useState(false);
   const [errorMsg, setErrorMsg] = useState(false);
+  const [localComment, setLocalComment] = useState<any>([]);
+  const [commentsList, setCommentsList] = useState<any>([]);
+  const [comment, setComment] = useState<any>({
+    description: "",
+    authorId: "",
+    userName: "",
+    image: "",
+    createdAt: "",
+  });
   const [active, setActive] = useState(true);
   const [post, setPost] = useState<any>([]);
   const [userData, setUserData] = useState<any>({
@@ -31,6 +40,13 @@ export default function Perfil({ params }: any) {
     if (item !== null) {
       const parsedUserData = JSON.parse(item);
       setUserData(parsedUserData);
+      setComment({
+        ...comment,
+        authorId: parsedUserData.id.toString(),
+        userName: parsedUserData.userName,
+        image: parsedUserData.image,
+      });
+      console.log(comment, "com");
     } else {
       console.log(
         "No se encontraron datos de usuario en el almacenamiento local"
@@ -48,6 +64,7 @@ export default function Perfil({ params }: any) {
         } else {
           setUserData(resp.data);
           setPost(resp.data.posts);
+          setCommentsList(resp.data.perfilComments);
         }
       } catch (error) {
         setErrorMsg(true);
@@ -58,7 +75,28 @@ export default function Perfil({ params }: any) {
     fetchUserData();
   }, [params]);
 
-  console.log(userData, "postss");
+  const handleTextAreaChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    const { name, value } = event.target;
+    setComment({ ...comment, [name]: value });
+  };
+
+  const handleSendComment = async () => {
+    try {
+      const resp = await axios.post(
+        `${URL}/user/comment/${params.id}`,
+        comment
+      );
+      console.log(resp, "resp del server");
+      setLocalComment((prevState) => [...prevState, comment]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  console.log(commentsList, "postss");
+
   return (
     <div className="flex justify-center flex-row bg-gray-500 h-screen space-x-2">
       <div className="flex flex-col items-center w-[200px] h-[400px] bg-gray-600 shadow-lg border border-orange-600 my-2">
@@ -133,7 +171,6 @@ export default function Perfil({ params }: any) {
               Comentar Perfil
             </button>
           </div>
-
           {active ? (
             post.map((e: any) => {
               return (
@@ -161,12 +198,57 @@ export default function Perfil({ params }: any) {
             })
           ) : (
             <div className="flex flex-col w-full h-full bg-slate-600 border-2 border-gray-800">
-              <div className="flex w-auto h-20 ml-1 bg-slate-700 justify-center items-center">
-                Aún no hay comentarios en el perfil de {userData.userName}
-              </div>
+              {commentsList && commentsList.length >= 1 ? (
+                commentsList.map((e: any) => {
+                  return (
+                    <div className="flex flex-row w-full h-auto bg-gray-600 border-2 border-gray-900">
+                      <div className="flex flex-col justify-center items-center p-3">
+                        <img className="flex w-[50px]" src={e.image}></img>
+                        <h5 className="flex font-bold">{e.userName}</h5>
+                      </div>
+                      <div className="flex flex-col w-full">
+                        <div className="flex w-full h-full bg-slate-500">
+                          {e.description}
+                        </div>
+                        <div className="flex justify-end w-full h-[20px] bg-slate-700">
+                          {e.createdAt.slice(0, 10)}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="flex w-auto h-20 ml-1 bg-slate-700 justify-center items-center">
+                  Aún no hay comentarios en el perfil de {userData.userName}
+                </div>
+              )}
+              {localComment && localComment.length >= 1
+                ? localComment.map((e: any) => {
+                    return (
+                      <div className="flex flex-row w-full h-auto bg-gray-600 border-2 border-gray-900">
+                        <div className="flex flex-col justify-center items-center p-3">
+                          <img className="flex w-[50px]" src={e.image}></img>
+                          <h5 className="flex font-bold">{e.userName}</h5>
+                        </div>
+                        <div className="flex w-full h-full bg-slate-500">
+                          {e.description}
+                        </div>
+                      </div>
+                    );
+                  })
+                : null}
               <div className="flex flex-row w-auto ml-1 justify-center items-center">
-                <textarea className="flex w-full border border-orange-700 h-full bg-slate-500"></textarea>
-                <button className="flex justify-center items-center h-full w-[90px] bg-orange-700">Comentar</button>
+                <textarea
+                  name="description"
+                  onChange={(event) => handleTextAreaChange(event)}
+                  className="flex w-full border border-orange-700 h-full bg-slate-500"
+                ></textarea>
+                <button
+                  onClick={() => handleSendComment()}
+                  className="flex justify-center items-center h-full w-[90px] bg-orange-700"
+                >
+                  Comentar
+                </button>
               </div>
             </div>
           )}
