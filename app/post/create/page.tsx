@@ -54,7 +54,7 @@ export default function CreatePost() {
     });
     const jsonResponse = await resp.json();
     console.log("?");
-    console.log(jsonResponse);
+    console.log(jsonResponse, "respppp");
     if (jsonResponse.status !== 404) {
       console.log("post creado con exito");
     } else {
@@ -76,8 +76,10 @@ export default function CreatePost() {
             name="section"
             value={postData.section}
             onChange={(e) => handleSelectChange(e)}
+            defaultValue="Seleccionar tema"
             className="flex items-center h-10 px-4 w-64 bg-slate-400 placeholder:text-black mt-2 rounded focus:outline-none focus:ring-2"
           >
+            <option className="text-gray-300">Seleccionar tema</option>
             <option>Programacion</option>
             <option>Empleos</option>
             <option>Educacion</option>

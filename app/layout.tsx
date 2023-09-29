@@ -22,7 +22,7 @@ export default function RootLayout({
       </head>
       <body className="flex flex-col bg-gray-800">
         <Navigation />
-        <div className="flex-grow">{children}</div>
+        <div className="flex-grow h-auto">{children}</div>
       </body>
     </html>
   );

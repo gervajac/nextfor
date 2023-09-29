@@ -89,7 +89,7 @@ export default function Perfil({ params }: any) {
         comment
       );
       console.log(resp, "resp del server");
-      setLocalComment((prevState) => [...prevState, comment]);
+      setLocalComment((prevState: any) => [...prevState, comment]);
     } catch (err) {
       console.log(err);
     }
