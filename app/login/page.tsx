@@ -38,15 +38,15 @@ export default function Login() {
   };
 
   return (
-    <div className="flex justify-center bg-slate-500 h-screen">
-      <div className="flex flex-col h-[800px] w-[500px] bg-gray-600 shadow-xl rounded mt-4">
-        <div className="flex justify-center text-2xl border-b-4 border-orange-700 items-center h-[100px] bg-gray-700 rounded">
+    <div className="flex justify-center bg-neutral-500 h-screen">
+      <div className="flex flex-col h-[800px] w-[500px] bg-neutral-600 shadow-xl rounded mt-4">
+        <div className="flex justify-center text-2xl border-b-4 border-amber-700 items-center h-[100px] bg-neutral-700 rounded">
           Registro de usuario
         </div>
         <div className="flex items-center flex-col text-black">
           <label className="font-semibold text-xs mt-4">Username</label>
           <input
-            className="flex items-center h-10 px-4 w-64 bg-gray-200 mt-2 rounded focus:outline-none focus:ring-2"
+            className="flex items-center h-10 px-4 w-64 bg-neutral-200 mt-2 rounded focus:outline-none focus:ring-2"
             type="name"
             name="userName"
             value={userData.userName}
@@ -55,7 +55,7 @@ export default function Login() {
           />
           <label className="font-semibold text-xs pt-2">Email</label>
           <input
-            className="flex items-center h-10 px-4 w-64 bg-gray-200 mt-2 rounded focus:outline-none focus:ring-2"
+            className="flex items-center h-10 px-4 w-64 bg-neutral-200 mt-2 rounded focus:outline-none focus:ring-2"
             type="email"
             name="mail"
             value={userData.mail}
@@ -64,7 +64,7 @@ export default function Login() {
           />
           <label className="font-semibold text-xs mt-1">Nueva Contraseña</label>
           <input
-            className="flex items-center h-10 px-4 w-64 bg-gray-200 mt-2 rounded focus:outline-none focus:ring-2"
+            className="flex items-center h-10 px-4 w-64 bg-neutral-200 mt-2 rounded focus:outline-none focus:ring-2"
             type="password"
             name="password"
             value={userData.password}

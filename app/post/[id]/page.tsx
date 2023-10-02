@@ -108,34 +108,34 @@ export default function Post({ params }: any) {
     <div className="flex flex-col h-screen">
       {post.postFound && post.postFound && (
         <div
-          className="bg-gray-600 flex flex-row max-h-[400px] shadow-2xl border-2 my-1 border-orange-700"
+          className="bg-neutral-600 flex flex-row h-auto min-h-[200px] min-w-[800px] shadow-2xl border-2 my-1 border-amber-700"
           key={post.postFound.id}
         >
-          <div className="flex flex-col items-center bg-gray-600 w-[200px]">
+          <div className="flex flex-col items-center bg-neutral-600 border border-black w-[200px]">
             <img
-              className="flex justify-center rounded-full max-w-[100px] max-h-[100px] border border-orange-500"
+              className="flex justify-center rounded-full max-w-[100px] max-h-[100px] border border-amber-500"
               src={post.postFound.author.image}
               alt="userpic"
             ></img>
             <div className="flex justify-center ">
               {post.postFound.author.userName}
             </div>
-            <h2 className="mt-auto justify-center flex bg-slate-500 w-full border-r-2 border-gray-600">
+            <h2 className="mt-auto justify-center flex bg-neutral-500 w-full border-r-2 border-neutral-600">
               Se unió: {post.postFound.author.createdAt.slice(0, 10)}
             </h2>
           </div>
-          <div className="flex flex-col bg-gray-400 w-[500px]">
-            <h6 className="flex text-orange-500 text-xl justify-center bg-slate-500">
+          <div className="flex flex-col bg-neutral-600 w-full">
+            <h6 className="flex text-amber-500 text-xl justify-center bg-neutral-500">
               {post.postFound.title} - Post Nº{post.postFound.id}
             </h6>
-            <h4 className="flex p-3 font-semibold">
+            <h4 className="flex p-3 font-semibold ">
               {post.postFound.description}
             </h4>
-            <h2 className="mt-auto flex justify-around bg-slate-500">
+            <h2 className="mt-auto flex justify-around bg-neutral-500">
               <div className="flex flex-row items-center">
                 <button
                   onClick={() => like()}
-                  disabled={disabledLike ? true : false}
+                  disabled={disabledLike || !connected ? true : false}
                   onMouseEnter={() => setFillHearth(true)}
                   onMouseLeave={() => setFillHearth(false)}
                   className="flex w-[30px]"
@@ -160,26 +160,26 @@ export default function Post({ params }: any) {
         post.commentsFound.map((e: any) => {
           return (
             <div
-              className="bg-gray-600 flex flex-row max-h-[400px] shadow-2xl my-1"
+              className="bg-neutral-600 flex flex-row max-h-[400px] shadow-2xl my-1"
               key={e.id}
             >
-              <div className="flex flex-col items-center bg-gray-600 w-[200px]">
+              <div className="flex flex-col items-center bg-neutral-600 w-[200px] border border-black">
                 <img
-                  className="flex justify-center rounded-full max-w-[100px] max-h-[100px] border border-orange-500"
+                  className="flex justify-center rounded-full max-w-[70px] max-h-[100px] border border-amber-500"
                   src={e.author.image}
                   alt="commentpic"
                 ></img>
                 <div className="flex justify-center ">{e.author.userName}</div>
-                <h2 className="mt-auto justify-center flex bg-slate-500 w-full border-r-2 border-gray-600">
+                <h2 className="mt-auto justify-center flex bg-neutral-500 w-full border-r-2 border-neutral-600">
                   Se unió: {e.author.createdAt.slice(0, 10)}
                 </h2>
               </div>
-              <div className="flex flex-col bg-gray-400 w-[500px]">
-                <h6 className="flex justify-center bg-slate-500">
+              <div className="flex flex-col bg-neutral-600 w-full">
+                <h6 className="flex justify-center bg-neutral-500">
                   Comentario Nº{e.id}
                 </h6>
                 <h4 className="flex p-3">{e.description}</h4>
-                <h2 className="mt-auto flex justify-end bg-slate-500">
+                <h2 className="mt-auto flex justify-end bg-neutral-500">
                   {e.createdAt.slice(0, 10)}
                 </h2>
               </div>
@@ -189,44 +189,46 @@ export default function Post({ params }: any) {
       {localComments &&
         localComments.map((e: any) => {
           return (
-            <div className="bg-gray-600 flex flex-row max-h-[400px] shadow-2xl border my-1">
-              <div className="flex flex-col items-center bg-gray-600 w-[200px]">
+            <div className="bg-neutral-600 flex flex-row max-h-[400px] shadow-2xl border my-1">
+              <div className="flex flex-col items-center bg-neutral-600 w-[200px]">
                 <img
-                  className="flex justify-center rounded-full max-w-[100px] max-h-[100px] border border-orange-500"
+                  className="flex justify-center rounded-full max-w-[100px] max-h-[100px] border border-amber-500"
                   src={e.author.image}
                   alt="commentpic"
                 ></img>
                 <div className="flex justify-center ">{e.author.userName}</div>
-                <h2 className="mt-auto justify-center flex bg-slate-500 w-full border-r-2 border-gray-600">
+                <h2 className="mt-auto justify-center flex bg-neutral-500 w-full border-r-2 border-neutral-600">
                   Se unió: {e.author.createdAt.slice(0, 10)}
                 </h2>
               </div>
-              <div className="flex flex-col bg-gray-400 w-[500px]">
-                <h6 className="flex justify-center bg-slate-500">
+              <div className="flex flex-col bg-neutral-400 w-[500px]">
+                <h6 className="flex justify-center bg-neutral-500">
                   Comentario Nº{e.id}
                 </h6>
                 <h4 className="flex p-3">{e.description}</h4>
-                <h2 className="mt-auto flex justify-end bg-slate-500">
+                <h2 className="mt-auto flex justify-end bg-neutral-500">
                   Creado ahora mismo.
                 </h2>
               </div>
             </div>
           );
         })}
-      <div className="bg-gray-600 flex flex-col h-auto max-h-[400px] shadow-2xl border my-1">
-        <div className="flex justify-start h-auto bg-slate-400">
+      <div className="bg-neutral-600 flex flex-col h-auto max-h-[400px] shadow-2xl border my-1">
+        <div className="flex justify-center h-auto bg-neutral-700">
           Agregar comentario
         </div>
         <div className="flex justify-between">
           <textarea
             onChange={(e) => handleTextAreaChange(e)}
             name="description"
-            placeholder="Escribe aquí el texto"
-            className="w-full h-full my-1 border border-orange-500 bg-gray-700"
+            disabled={!connected ? true : false}
+            placeholder={connected ? "Escribe aquí el texto" : "Logueate para poder comentar"}
+            className="w-full h-full my-1 border border-amber-500 bg-neutral-700"
           ></textarea>
           <button
             onClick={() => handleSendComment()}
-            className="bg-orange-600 p-2 my-2 rounded mx-1"
+            disabled={!connected ? true : false}
+            className="bg-amber-600 p-2 my-2 rounded mx-1"
           >
             Comentar
           </button>

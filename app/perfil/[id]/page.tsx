@@ -8,6 +8,7 @@ import Link from "next/link";
 export default function Perfil({ params }: any) {
   const [successMsg, setSuccessMsg] = useState(false);
   const [errorMsg, setErrorMsg] = useState(false);
+  const [connected, setConnected] = useState(false);
   const [localComment, setLocalComment] = useState<any>([]);
   const [commentsList, setCommentsList] = useState<any>([]);
   const [comment, setComment] = useState<any>({
@@ -40,6 +41,7 @@ export default function Perfil({ params }: any) {
     if (item !== null) {
       const parsedUserData = JSON.parse(item);
       setUserData(parsedUserData);
+      setConnected(true);
       setComment({
         ...comment,
         authorId: parsedUserData.id.toString(),
@@ -48,9 +50,7 @@ export default function Perfil({ params }: any) {
       });
       console.log(comment, "com");
     } else {
-      console.log(
-        "No se encontraron datos de usuario en el almacenamiento local"
-      );
+      setConnected(false);
     }
   }, []);
 
@@ -98,8 +98,8 @@ export default function Perfil({ params }: any) {
   console.log(commentsList, "postss");
 
   return (
-    <div className="flex justify-center flex-row bg-gray-500 h-screen space-x-2">
-      <div className="flex flex-col items-center w-[200px] h-[400px] bg-gray-600 shadow-lg border border-orange-600 my-2">
+    <div className="flex justify-center flex-row bg-neutral-500 h-screen space-x-2">
+      <div className="flex flex-col items-center w-[200px] h-[400px] bg-neutral-600 shadow-lg border border-amber-600 my-2">
         <img
           className="flex items-center mt-2 max-w-[60px] max-h-[60px] rounded"
           src={userData.image}
@@ -147,14 +147,14 @@ export default function Perfil({ params }: any) {
           {userData.createdAt.slice(0, 10)}
         </h4>
       </div>
-      <div className="flex flex-col w-[650px] h-auto min-h-screen bg-gray-600 shadow-lg border border-orange-600 my-2">
-        <div className="flex justify-start items-center flex-col bg-gray-700 w-full h-full">
-          <div className="flex flex-row justify-around space-x-2 w-full h-[40px] bg-slate-600 border-2 border-gray-800">
+      <div className="flex flex-col w-[650px] h-auto min-h-screen bg-neutral-600 shadow-lg border border-amber-600 my-2">
+        <div className="flex justify-start items-center flex-col bg-neutral-700 w-full h-full">
+          <div className="flex flex-row justify-around space-x-2 w-full h-[40px] bg-neutral-600 border-2 border-neutral-800">
             <button
               onClick={() => setActive(true)}
               className={
                 active
-                  ? "flex justify-center items-center font-semibold w-full bg-slate-800"
+                  ? "flex justify-center items-center font-semibold w-full bg-neutral-800"
                   : "flex w-full justify-center items-center"
               }
             >
@@ -164,7 +164,7 @@ export default function Perfil({ params }: any) {
               onClick={() => setActive(false)}
               className={
                 !active
-                  ? "flex justify-center items-center font-semibold w-full bg-slate-800"
+                  ? "flex justify-center items-center font-semibold w-full bg-neutral-800"
                   : "flex w-full justify-center items-center"
               }
             >
@@ -174,18 +174,18 @@ export default function Perfil({ params }: any) {
           {active ? (
             post.map((e: any) => {
               return (
-                <div className="flex flex-row w-full h-[100px] bg-slate-600 border-2 border-gray-800">
+                <div className="flex flex-row w-full h-[100px] bg-neutral-600 border-2 border-neutral-800">
                   <div className="flex w-auto ml-1 justify-center items-center">
                     {e.section}
                   </div>
                   <div className="flex w-[700px] justify-center flex-col items-start ml-4">
                     <Link href="/posts/id" as={`/post/${e.id}`}>
-                      <h5 className="text-xl hover:text-orange-700">
+                      <h5 className="text-xl hover:text-amber-700">
                         {e.title}
                       </h5>
                     </Link>
-                    <h2 className="flex flex-row justify-start items-start text-orange-500">
-                      <span className="flex text-orange-700">
+                    <h2 className="flex flex-row justify-start items-start text-amber-500">
+                      <span className="flex text-amber-700">
                         {userData.userName}
                       </span>
                       <span className="flex text-white">
@@ -197,20 +197,20 @@ export default function Perfil({ params }: any) {
               );
             })
           ) : (
-            <div className="flex flex-col w-full h-full bg-slate-600 border-2 border-gray-800">
+            <div className="flex flex-col w-full h-full bg-neutral-600 border-2 border-neutral-800">
               {commentsList && commentsList.length >= 1 ? (
                 commentsList.map((e: any) => {
                   return (
-                    <div className="flex flex-row w-full h-auto bg-gray-600 border-2 border-gray-900">
+                    <div className="flex flex-row w-full h-auto bg-neutral-600 border-2 border-neutral-900">
                       <div className="flex flex-col justify-center items-center p-3">
                         <img className="flex w-[50px]" src={e.image}></img>
                         <h5 className="flex font-bold">{e.userName}</h5>
                       </div>
                       <div className="flex flex-col w-full">
-                        <div className="flex w-full h-full bg-slate-500">
+                        <div className="flex w-full h-full bg-neutral-500">
                           {e.description}
                         </div>
-                        <div className="flex justify-end w-full h-[20px] bg-slate-700">
+                        <div className="flex justify-end w-full h-[20px] bg-neutral-700">
                           {e.createdAt.slice(0, 10)}
                         </div>
                       </div>
@@ -218,19 +218,19 @@ export default function Perfil({ params }: any) {
                   );
                 })
               ) : (
-                <div className="flex w-auto h-20 ml-1 bg-slate-700 justify-center items-center">
+                <div className="flex w-auto h-20 ml-1 bg-neutral-700 justify-center items-center">
                   Aún no hay comentarios en el perfil de {userData.userName}
                 </div>
               )}
               {localComment && localComment.length >= 1
                 ? localComment.map((e: any) => {
                     return (
-                      <div className="flex flex-row w-full h-auto bg-gray-600 border-2 border-gray-900">
+                      <div className="flex flex-row w-full h-auto bg-neutral-600 border-2 border-neutral-900">
                         <div className="flex flex-col justify-center items-center p-3">
                           <img className="flex w-[50px]" src={e.image}></img>
                           <h5 className="flex font-bold">{e.userName}</h5>
                         </div>
-                        <div className="flex w-full h-full bg-slate-500">
+                        <div className="flex w-full h-full bg-neutral-500">
                           {e.description}
                         </div>
                       </div>
@@ -240,12 +240,15 @@ export default function Perfil({ params }: any) {
               <div className="flex flex-row w-auto ml-1 justify-center items-center">
                 <textarea
                   name="description"
+                  placeholder={!connected ? "Debes loguearte para poder comentar" : "Introduce aquí tu comentario"}
+                  disabled={!connected ? true : false}
                   onChange={(event) => handleTextAreaChange(event)}
-                  className="flex w-full border border-orange-700 h-full bg-slate-500"
+                  className="flex w-full border border-amber-700 h-full bg-neutral-500"
                 ></textarea>
                 <button
                   onClick={() => handleSendComment()}
-                  className="flex justify-center items-center h-full w-[90px] bg-orange-700"
+                  disabled={!connected ? true : false}
+                  className="flex justify-center items-center h-full w-[90px] bg-amber-700"
                 >
                   Comentar
                 </button>

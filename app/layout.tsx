@@ -20,7 +20,7 @@ export default function RootLayout({
       <head>
         <title>ForoARdev</title>
       </head>
-      <body className="flex flex-col bg-gray-800">
+      <body className="flex flex-col bg-neutral-800">
         <Navigation />
         <div className="flex-grow h-auto">{children}</div>
       </body>

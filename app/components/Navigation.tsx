@@ -40,11 +40,17 @@ export function Navigation() {
     }
   }, []);
 
+  const logOut = async () => {
+    await localStorage.removeItem("user");
+    setConnected(false);
+    setUserData({});
+  };
+
   console.log(userData, "conected?");
 
   return (
     <header>
-      <nav className="bg-gray-800 border-b-2 border-orange-500 justify-center p-4 flex items-center">
+      <nav className="bg-neutral-800 border-b-2 border-amber-500 justify-center p-4 flex items-center">
         <div className="flex items-center">
           <Link href="/post" as={`/post`} className="flex">
             <div className="text-white font-bold text-xl mr-8">LOGO</div>
@@ -61,7 +67,7 @@ export function Navigation() {
                 setOpen3(false);
                 setOpen4(false);
               }}
-              className="cursor-pointer text-white hover:text-orange-700 p-2 rounded"
+              className="cursor-pointer text-white hover:text-amber-700 p-2 rounded"
             >
               Programacion
             </Link>
@@ -69,7 +75,7 @@ export function Navigation() {
               onMouseLeave={() => setOpen1(false)}
               className={`${
                 open1 ? "block" : "hidden"
-              } bg-orange-400 absolute mt-2 p-2 shadow-md rounded`}
+              } bg-amber-400 absolute mt-2 p-2 shadow-md rounded`}
             >
               <button className="cursor-pointer text-black hover:text-white">
                 Novedades
@@ -92,7 +98,7 @@ export function Navigation() {
                 setOpen3(false);
                 setOpen4(false);
               }}
-              className="cursor-pointer text-white hover:text-orange-700 p-2 rounded"
+              className="cursor-pointer text-white hover:text-amber-700 p-2 rounded"
             >
               Empleos
             </Link>
@@ -120,7 +126,7 @@ export function Navigation() {
                 setOpen3(false);
                 setOpen4(true);
               }}
-              className="cursor-pointer text-white hover:text-orange-700 p-2 rounded"
+              className="cursor-pointer text-white hover:text-amber-700 p-2 rounded"
             >
               Educacion
             </Link>
@@ -137,15 +143,26 @@ export function Navigation() {
               </div>
             </div>
           </div>
+          {connected && (
+            <div className="relative group">
+              <Link
+                href="/post/create"
+                as={`/post/create`}
+                className="cursor-pointer text-white hover:text-amber-700 p-2 rounded"
+              >
+                Crear Post
+              </Link>
+            </div>
+          )}
           <div className="flex justify-center items-center flex-row">
             {!connected ? (
               <>
-                <Link href="/login" as={`/login`} className="flex">
+                <Link href="/signin" as={`/signin`} className="flex">
                   <button className="flex justify-center items-center rounded-lg px-3 bg-yellow-600">
                     Ingresar
                   </button>
                 </Link>
-                <Link href="/signin" as={`/signin`} className="flex">
+                <Link href="/login" as={`/login`} className="flex">
                   <button className="flex justify-center items-center rounded-lg px-3 text-yellow-600">
                     Registrarse
                   </button>
@@ -154,13 +171,6 @@ export function Navigation() {
             ) : (
               <div className="relative group">
                 <div className="flex flex-row">
-                  <Link
-                    href="/post/create"
-                    as={`/post/create`}
-                    className="flex items-center justify-center mr-2 hover:underline text-orange-600"
-                  >
-                    Crear Post
-                  </Link>
                   <div
                     onMouseEnter={() => {
                       setOpen1(false);
@@ -172,18 +182,21 @@ export function Navigation() {
                   >
                     <img
                       src="https://toppng.com/uploads/preview/vu-thi-ha-user-pro-icon-115534024853ae3gswzwd.png"
-                      className="flex border-2 border-orange-600 max-w-[40px] max-h-[40px]"
-                    ></img>
+                      className="flex border-2 border-amber-600 max-w-[40px] max-h-[40px]"
+                    />
                   </div>
                 </div>
                 <div
                   onMouseLeave={() => setOpen3(false)}
                   className={`${
                     open3 ? "block" : "hidden"
-                  } bg-orange-400 absolute mt-2 shadow-md rounded min-w-[80px] w-auto`}
+                  } bg-amber-400 absolute mt-2 shadow-md rounded min-w-[80px] w-auto`}
                 >
-                  <div className="flex flex-col">
-                    <Link href="/perfil" className="cursor-pointer text-black hover:text-white">
+                  <div className="flex flex-col items-center">
+                    <Link
+                      href="/perfil"
+                      className="cursor-pointer text-black hover:text-white"
+                    >
                       Perfil
                     </Link>
                     <button className="cursor-pointer text-black hover:text-white">
@@ -191,6 +204,12 @@ export function Navigation() {
                     </button>
                     <button className="cursor-pointer text-black hover:text-white">
                       Post
+                    </button>
+                    <button
+                      onClick={() => logOut()}
+                      className="cursor-pointer text-black hover:text-white"
+                    >
+                      Salir
                     </button>
                   </div>
                 </div>

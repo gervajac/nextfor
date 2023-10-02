@@ -21,9 +21,7 @@ export default function CreatePost() {
       const parsedUserData = JSON.parse(item);
       postData.authorId = parsedUserData.id;
     } else {
-      console.log(
-        "No se encontraron datos de usuario en el almacenamiento local"
-      );
+      redirect("/post");
     }
   }, []);
 
@@ -65,9 +63,9 @@ export default function CreatePost() {
   console.log(postData, "dat");
 
   return (
-    <div className="flex justify-center bg-slate-500 h-screen">
-      <div className="flex flex-col mx-2 h-[800px] w-[700px] bg-gray-600 shadow-xl rounded mt-4">
-        <div className="flex justify-start pl-2 text-2xl border-b-4 border-orange-700 items-center h-[100px] bg-gray-700 rounded">
+    <div className="flex justify-center bg-neutral-500 h-screen">
+      <div className="flex flex-col mx-2 h-[800px] w-[700px] bg-neutral-600 shadow-xl rounded mt-4">
+        <div className="flex justify-start pl-2 text-2xl border-b-4 border-amber-700 items-center h-[100px] bg-neutral-700 rounded">
           Crear posteo
         </div>
         <div className="flex items-start flex-col text-black mx-2">
@@ -77,9 +75,9 @@ export default function CreatePost() {
             value={postData.section}
             onChange={(e) => handleSelectChange(e)}
             defaultValue="Seleccionar tema"
-            className="flex items-center h-10 px-4 w-64 bg-slate-400 placeholder:text-black mt-2 rounded focus:outline-none focus:ring-2"
+            className="flex items-center h-10 px-4 w-64 bg-neutral-400 placeholder:text-black mt-2 rounded focus:outline-none focus:ring-2"
           >
-            <option className="text-gray-300">Seleccionar tema</option>
+            <option className="text-neutral-300">Seleccionar tema</option>
             <option>Programacion</option>
             <option>Empleos</option>
             <option>Educacion</option>
@@ -88,7 +86,7 @@ export default function CreatePost() {
             Titulo
           </label>
           <input
-            className="flex items-center h-10 px-4 w-64 bg-slate-400 placeholder:text-black mt-2 rounded focus:outline-none focus:ring-2"
+            className="flex items-center h-10 px-4 w-64 bg-neutral-400 placeholder:text-black mt-2 rounded focus:outline-none focus:ring-2"
             type="text"
             name="title"
             value={postData.title}
@@ -97,7 +95,7 @@ export default function CreatePost() {
           />
           <label className="font-semibold text-xl mt-4">Descripcion</label>
           <textarea
-            className="flex items-center min-w-full min-h-[100px] p-2 placeholder:text-black text-black bg-slate-400 h-10 px-4 w-full mt-2 rounded focus:outline-none focus:ring-2"
+            className="flex items-center min-w-full min-h-[100px] p-2 placeholder:text-black text-black bg-neutral-400 h-10 px-4 w-full mt-2 rounded focus:outline-none focus:ring-2"
             name="description"
             value={postData.description}
             onChange={(e) => handleTextAreaChange(e)}
@@ -109,7 +107,7 @@ export default function CreatePost() {
           <button
             onClick={() => handleVerification()}
             type="button"
-            className="h-auto w-auto p-3 inline-block m-2 rounded-lg border border-orange-700 bg-gray-700 text-sm font-medium text-white"
+            className="h-auto w-auto p-3 inline-block m-2 rounded-lg border border-amber-700 bg-neutral-700 text-sm font-medium text-white"
           >
             Publicar posteo
           </button>

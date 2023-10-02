@@ -47,8 +47,8 @@ export function Comment({ params }: any) {
   console.log(params, "encomment");
 
   return (
-    <div className="bg-gray-600 flex flex-col h-auto max-h-[400px] shadow-2xl border my-1">
-      <div className="flex justify-start h-auto bg-slate-400">
+    <div className="bg-neutral-600 flex flex-col h-auto max-h-[400px] shadow-2xl border my-1">
+      <div className="flex justify-start h-auto bg-neutral-400">
         Agregar comentario
       </div>
       <div className="flex justify-between">
@@ -56,11 +56,11 @@ export function Comment({ params }: any) {
           onChange={(e) => handleTextAreaChange(e)}
           name="description"
           placeholder="Escribe aquí el texto"
-          className="w-full h-full my-1 border border-orange-500 bg-gray-700"
+          className="w-full h-full my-1 border border-amber-500 bg-neutral-700"
         ></textarea>
         <button
           onClick={() => handleSendComment()}
-          className="bg-orange-600 p-2 my-2 rounded mx-1"
+          className="bg-amber-600 p-2 my-2 rounded mx-1"
         >
           Comentar
         </button>
