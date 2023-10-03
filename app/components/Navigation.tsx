@@ -14,7 +14,7 @@ export function Navigation() {
   const [open4, setOpen4] = useState(false);
   const [word, setWord] = useState("");
   const [connected, setConnected] = useState(false);
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState("");
 
   useEffect(() => {
     const ruta = window.location.href;
@@ -24,7 +24,7 @@ export function Navigation() {
       const isConnected = storage && storage.length > 1;
       if (isConnected) {
         const parsedUserData = JSON.parse(storage);
-        setUserData(parsedUserData);
+        setUserData(parsedUserData.image);
       }
       setConnected(!!isConnected);
     }
@@ -33,7 +33,7 @@ export function Navigation() {
   const logOut = async () => {
     await localStorage.removeItem("user");
     setConnected(false);
-    setUserData({});
+    setUserData("");
   };
 
   return (
@@ -155,7 +155,7 @@ export function Navigation() {
               fill="currentColor"
             >
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
                 clip-rule="evenodd"
               />
@@ -200,7 +200,7 @@ export function Navigation() {
                   className="cursor-pointer text-white p-2 rounded"
                 >
                   <img
-                    src="https://toppng.com/uploads/preview/vu-thi-ha-user-pro-icon-115534024853ae3gswzwd.png"
+                    src={userData && userData}
                     className="flex border-2 border-amber-600 max-w-[40px] max-h-[40px]"
                   />
                 </div>

@@ -13,7 +13,7 @@ const fetchPost = async () => {
 
 export async function ListOfPosts() {
   const posts = await fetchPost();
-  console.log(posts.data.rank, "ppppp");
+  console.log(posts.data, "ppppp");
   return (
     <div className="flex flex-col bg-neutral-700">
       <div className="flex flex-row justify-center h-[50px] w-full shadow-md">
@@ -55,6 +55,11 @@ export async function ListOfPosts() {
                 <h1 className="flex text-sm justify-center items-center my-4 p-1">
                   {e.description}
                 </h1>
+                <img
+                  className="flex justify-center mb-1 max-w-full h-auto max-h-[300px]"
+                  src={e.image && e.image}
+                  alt={e.image}
+                ></img>
                 <div className="flex items-center flex-row w-full bg-neutral-600 space-x-2">
                   <img
                     src={e.author.image}
@@ -113,6 +118,11 @@ export async function ListOfPosts() {
                 <h1 className="flex text-sm justify-center items-center my-4 p-1">
                   {e.description}
                 </h1>
+                <img
+                  className="flex justify-center mb-1 max-w-full h-auto max-h-[300px]"
+                  src={e.image && e.image}
+                  alt={e.image}
+                ></img>
                 <div className="flex items-center flex-row w-full bg-neutral-600 space-x-2">
                   <img
                     src={e.author.image}
@@ -171,6 +181,11 @@ export async function ListOfPosts() {
                 <h1 className="flex text-sm justify-center items-center my-4 p-1">
                   {e.description}
                 </h1>
+                <img
+                  className="flex justify-center mb-1 max-w-full h-auto max-h-[300px]"
+                  src={e.image && e.image}
+                  alt={e.image}
+                ></img>
                 <div className="flex items-center flex-row w-full bg-neutral-600 space-x-2">
                   <img
                     src={e.author.image}
@@ -229,6 +244,11 @@ export async function ListOfPosts() {
                 <h1 className="flex text-sm justify-center items-center my-4 p-1">
                   {e.description}
                 </h1>
+                <img
+                  className="flex justify-center mb-1 max-w-full h-auto max-h-[300px]"
+                  src={e.image && e.image}
+                  alt={e.image}
+                ></img>
                 <div className="flex items-center flex-row w-full bg-neutral-600 space-x-2">
                   <img
                     src={e.author.image}

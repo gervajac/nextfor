@@ -105,10 +105,10 @@ export default function Post({ params }: any) {
   console.log(localComments, "aver");
   console.log(localComment, "esteinteresa");
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen w-auto max-w-[900px]">
       {post.postFound && post.postFound && (
         <div
-          className="bg-neutral-600 flex flex-row h-auto min-h-[200px] min-w-[800px] shadow-2xl border-2 my-1 border-amber-700"
+          className="bg-neutral-600 flex flex-row h-auto min-h-[200px] w-auto min-w-[500px] shadow-2xl border-2 my-1 border-amber-700"
           key={post.postFound.id}
         >
           <div className="flex flex-col items-center bg-neutral-600 border border-black w-[200px]">
@@ -131,6 +131,11 @@ export default function Post({ params }: any) {
             <h4 className="flex p-3 font-semibold ">
               {post.postFound.description}
             </h4>
+            <img
+              className="flex justify-center mb-1 max-w-full p-4 h-auto max-h-[300px]"
+              src={post.postFound.image && post.postFound.image}
+              alt={post.postFound.image}
+            ></img>
             <h2 className="mt-auto flex justify-around bg-neutral-500">
               <div className="flex flex-row items-center">
                 <button
@@ -201,7 +206,7 @@ export default function Post({ params }: any) {
                   Se unió: {e.author.createdAt.slice(0, 10)}
                 </h2>
               </div>
-              <div className="flex flex-col bg-neutral-400 w-[500px]">
+              <div className="flex flex-col bg-neutral-600 w-full">
                 <h6 className="flex justify-center bg-neutral-500">
                   Comentario Nº{e.id}
                 </h6>
@@ -222,7 +227,11 @@ export default function Post({ params }: any) {
             onChange={(e) => handleTextAreaChange(e)}
             name="description"
             disabled={!connected ? true : false}
-            placeholder={connected ? "Escribe aquí el texto" : "Logueate para poder comentar"}
+            placeholder={
+              connected
+                ? "Escribe aquí el texto"
+                : "Logueate para poder comentar"
+            }
             className="w-full h-full my-1 border border-amber-500 bg-neutral-700"
           ></textarea>
           <button

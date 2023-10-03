@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { URL } from "@/utils/constants";
 import { redirect } from "next/navigation";
+import { uploadFile } from "../config/config";
 
 export default function Perfil() {
   const [successMsg, setSuccessMsg] = useState(false);
@@ -62,21 +63,45 @@ export default function Perfil() {
     );
 
     if (resp.status !== 404) {
-      console.log(resp, "respuesta");
-      console.log("Usuario actualizado");
+      alert("Usuario actualizado");
+      localStorage.setItem("user", JSON.stringify(userData));
     } else {
       setErrorMsg(true);
       console.log("error");
     }
   };
+  const avatarList = [
+    "https://img2.freepng.es/20180410/rze/kisspng-ninja-computer-programming-learning-study-skills-avatar-5acd61df554968.2443493915234093753493.jpg",
+    "https://yt3.googleusercontent.com/1SFBG2eSQQbPSqyUkfHQCYO0y34qpWlKh2fVwsXv_vaa0dwLStb9YoqQFEs348INFKRcJ5DoQEw=s900-c-k-c0x00ffffff-no-rj",
+    "https://avatars.githubusercontent.com/u/54087641?v=4",
+    "https://edteam-media.s3.amazonaws.com/users/avatar/4ee40616-0e57-40a0-96fc-8d5f7c56991b.png",
+    "https://previews.123rf.com/images/yupiramos/yupiramos1710/yupiramos171009847/87760314-chica-de-dibujos-animados-con-la-ilustraci%C3%B3n-de-vector-de-trabajo-de-programaci%C3%B3n-port%C3%A1til.jpg",
+  ];
 
+  const handleImageChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { name } = event.target;
+    const file = event.target.files && event.target.files[0];
+    try {
+      if (file) {
+        const result = await uploadFile(file);
+        const reader = new FileReader();
+        setUserData({ ...userData, image: result });
+        reader.readAsDataURL(file);
+      }
+    } catch (err) {
+      console.log(err);
+      alert(err);
+    }
+  };
   console.log(userData, "dat");
 
   return (
-    <div className="flex justify-center flex-row bg-neutral-500 h-screen space-x-2">
+    <div className="flex justify-center flex-row bg-neutral-500 h-auto space-x-2">
       <div className="flex flex-col items-center w-[200px] h-[400px] bg-neutral-600 shadow-lg border border-amber-600 my-2">
         <img
-          className="flex items-center mt-2 max-w-[60px] max-h-[60px] rounded"
+          className="flex items-center mt-2 h-[60px] w-[60px] rounded"
           src={userData.image}
         ></img>
         <h5 className="flex items-center font-semibold text-black">
@@ -89,6 +114,49 @@ export default function Perfil() {
           Información Personal
         </h6>
         <div className="flex flex-col">
+          <label className="flex text-xl ml-2 mb-2 text-black underline font-semibold">
+            Avatar
+          </label>
+          <div className="flex flex-row justify-center space-x-4 ml-4">
+            {avatarList &&
+              avatarList.map((e, index) => {
+                return (
+                  <button
+                    onClick={() =>
+                      setUserData((prevState) => ({ ...prevState, image: e }))
+                    }
+                  >
+                    <img
+                      className={
+                        e === userData.image
+                          ? "flex max-w-[60px] border-2 border-amber-700"
+                          : "flex max-w-[60px]"
+                      }
+                      key={index}
+                      src={e}
+                      alt={`Avatar ${index}`}
+                    />
+                  </button>
+                );
+              })}
+          </div>
+          <div className="flex justify-center flex-row space-x-4">
+            <input
+              className="hidden"
+              type="file"
+              name="image"
+              accept=".jpg, .jpeg, .png"
+              onChange={(e) => handleImageChange(e)}
+              id="fileInput"
+              placeholder="Sube tu foto de perfil"
+            />
+            <label
+              htmlFor="fileInput"
+              className="flex justify-center text-black p-2 h-[40px] w-auto bg-amber-600 font-semibold my-2 rounded cursor-pointer"
+            >
+              Elegir mi propia imagen
+            </label>
+          </div>
           <label className="flex text-xl ml-2 text-black underline font-semibold">
             Datos Personales
           </label>
