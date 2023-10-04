@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import logo from "../app/assets/logo.png";
 import { Navigation } from "./components/Navigation";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,7 +19,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>ForoARdev</title>
+        <title>ArgentinaDevs</title>
+        <link rel="icon" type="image/svg+xml" href="https://i.ibb.co/cTbCd13/logoforo.png" />
       </head>
       <body className="flex flex-col bg-neutral-800">
         <Navigation />

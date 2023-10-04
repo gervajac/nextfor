@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import { URL } from "@/utils/constants";
 import { Comment } from "./Comment";
 import axios from "axios";
+import { uploadFile } from "@/app/config/config";
 import like from "../../assets/like.svg";
 
 export default function Post({ params }: any) {
   const { id } = params;
-  const [comment, setComment] = useState<any>([]);
   const [connected, setConnected] = useState(false);
   const [fillHearth, setFillHearth] = useState(false);
   const [Hearth, setHearth] = useState(false);
@@ -15,19 +15,19 @@ export default function Post({ params }: any) {
   const [parsedData, setParsedData] = useState({});
   const [likes, setLikes] = useState<any>([]);
   const [post, setPost] = useState<any>([]);
-  const [comments, setComments] = useState({
+  const [newComment, setNewComment] = useState({
     description: "",
     image: "",
     authorId: "",
     postId: id,
   });
   const [localComments, setLocalComments] = useState<any>([]);
-  const [localComment, setLocalComment] = useState({
+  const [newLocalComment, setNewLocalComment] = useState({
     description: "",
     image: "",
     authorId: "",
     postId: id,
-    author: parsedData,
+    author: {},
   });
 
   useEffect(() => {
@@ -37,25 +37,21 @@ export default function Post({ params }: any) {
       if (isConnected) {
         const parsedUserData = JSON.parse(storage);
         setConnected(true);
-        comments.authorId = parsedUserData.id;
-        setLocalComment((prevState) => ({
-          ...prevState,
-          author: parsedUserData,
-        }));
+        newComment.authorId = parsedUserData.id;
+        setNewLocalComment({ ...newLocalComment, author: parsedUserData });
       }
     }
   }, []);
-  console.log(parsedData, "parsedat");
+
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        console.log("entra de nuevo aca?");
         const response = await axios.get(`${URL}/comment/${id}`);
-        console.log(response.data.postFound, "respuesta del post");
+        console.log(response.data, "respuesta del post");
         setPost(response.data);
         setLikes(response.data.likes);
         const log = response.data.likes.some(
-          (e: any) => e === comments.authorId
+          (e: any) => e === newComment.authorId
         );
         if (log) {
           setFillHearth(true);
@@ -74,15 +70,22 @@ export default function Post({ params }: any) {
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     const { name, value } = event.target;
-    setComments({ ...comments, [name]: value });
-    setLocalComment({ ...localComment, [name]: value });
+    setNewComment({ ...newComment, [name]: value });
+    setNewLocalComment({ ...newLocalComment, [name]: value });
   };
 
   const handleSendComment = async () => {
     try {
-      const resp = await axios.post(`${URL}/comment`, comments);
-      setComment([...comment, resp.data]);
-      setLocalComments([...localComments, localComment]);
+      console.log(newComment, "nuevo comentario antes de entrar en setlocal");
+      const resp = await axios.post(`${URL}/comment`, newComment);
+      setLocalComments([...localComments, newComment]);
+      setNewComment({
+        description: "",
+        image: "",
+        authorId: newComment.authorId,
+        postId: id,
+      });
+      console.log(localComments, "localcoments post resp");
     } catch (err) {
       console.log(err);
     }
@@ -91,7 +94,7 @@ export default function Post({ params }: any) {
   const like = async () => {
     try {
       const resp = await axios.post(`${URL}/user/like/${id}`, {
-        userId: comments.authorId,
+        userId: newComment.authorId,
       });
       console.log(resp, "resp");
       setLikes([...likes, +1]);
@@ -102,30 +105,48 @@ export default function Post({ params }: any) {
     setHearth(true);
   };
 
-  console.log(localComments, "aver");
-  console.log(localComment, "esteinteresa");
+  const handleImageChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { name } = event.target;
+    const file = event.target.files && event.target.files[0];
+    try {
+      if (file) {
+        const result = await uploadFile(file);
+        const reader = new FileReader();
+        setNewComment({ ...newComment, image: result });
+        reader.readAsDataURL(file);
+      }
+    } catch (err) {
+      console.log(err);
+      alert(err);
+    }
+  };
+
+  console.log(localComments, "asd");
+
   return (
-    <div className="flex flex-col h-screen w-auto max-w-[900px]">
+    <div className="flex flex-col min-h-screen h-auto w-auto min-w-[900px] max-w-[1000px]">
       {post.postFound && post.postFound && (
         <div
-          className="bg-neutral-600 flex flex-row h-auto min-h-[200px] w-auto min-w-[500px] shadow-2xl border-2 my-1 border-amber-700"
+          className="bg-neutral-700 flex flex-row h-auto min-h-[200px] w-auto min-w-[600px] shadow-2xl my-1" 
           key={post.postFound.id}
         >
-          <div className="flex flex-col items-center bg-neutral-600 border border-black w-[200px]">
+          <div className="flex flex-col items-center bg-neutral-700 border border-black w-[200px]">
             <img
-              className="flex justify-center rounded-full max-w-[100px] max-h-[100px] border border-amber-500"
+              className="flex justify-center rounded-full max-w-[90px] max-h-[90px] border border-amber-600"
               src={post.postFound.author.image}
               alt="userpic"
             ></img>
             <div className="flex justify-center ">
               {post.postFound.author.userName}
             </div>
-            <h2 className="mt-auto justify-center flex bg-neutral-500 w-full border-r-2 border-neutral-600">
+            <h2 className="mt-auto justify-center flex bg-neutral-600 w-full border-r-2 border-neutral-700">
               Se unió: {post.postFound.author.createdAt.slice(0, 10)}
             </h2>
           </div>
-          <div className="flex flex-col bg-neutral-600 w-full">
-            <h6 className="flex text-amber-500 text-xl justify-center bg-neutral-500">
+          <div className="flex flex-col bg-neutral-700 w-full">
+            <h6 className="flex text-amber-600 text-xl justify-center bg-neutral-600">
               {post.postFound.title} - Post Nº{post.postFound.id}
             </h6>
             <h4 className="flex p-3 font-semibold ">
@@ -136,7 +157,7 @@ export default function Post({ params }: any) {
               src={post.postFound.image && post.postFound.image}
               alt={post.postFound.image}
             ></img>
-            <h2 className="mt-auto flex justify-around bg-neutral-500">
+            <h2 className="mt-auto flex justify-around bg-neutral-600">
               <div className="flex flex-row items-center">
                 <button
                   onClick={() => like()}
@@ -165,26 +186,31 @@ export default function Post({ params }: any) {
         post.commentsFound.map((e: any) => {
           return (
             <div
-              className="bg-neutral-600 flex flex-row max-h-[400px] shadow-2xl my-1"
+              className="bg-neutral-700 flex flex-row max-h-[400px] shadow-2xl my-1"
               key={e.id}
             >
-              <div className="flex flex-col items-center bg-neutral-600 w-[200px] border border-black">
+              <div className="flex flex-col items-center bg-neutral-700 w-[200px] border border-black">
                 <img
-                  className="flex justify-center rounded-full max-w-[70px] max-h-[100px] border border-amber-500"
+                  className="flex justify-center rounded-full w-[70px] h-[70px] border border-amber-600"
                   src={e.author.image}
                   alt="commentpic"
                 ></img>
                 <div className="flex justify-center ">{e.author.userName}</div>
-                <h2 className="mt-auto justify-center flex bg-neutral-500 w-full border-r-2 border-neutral-600">
+                <h2 className="mt-auto justify-center flex bg-neutral-600 w-full border-r-2 border-neutral-700">
                   Se unió: {e.author.createdAt.slice(0, 10)}
                 </h2>
               </div>
-              <div className="flex flex-col bg-neutral-600 w-full">
-                <h6 className="flex justify-center bg-neutral-500">
+              <div className="flex flex-col bg-neutral-700 w-full">
+                <h6 className="flex justify-center bg-neutral-600">
                   Comentario Nº{e.id}
                 </h6>
                 <h4 className="flex p-3">{e.description}</h4>
-                <h2 className="mt-auto flex justify-end bg-neutral-500">
+                <img
+                  className="flex justify-center mb-1 max-w-full p-4 h-auto max-h-[300px]"
+                  src={e.image && e.image}
+                  alt={e.image && e.image}
+                ></img>
+                <h2 className="mt-auto flex justify-end bg-neutral-600">
                   {e.createdAt.slice(0, 10)}
                 </h2>
               </div>
@@ -194,37 +220,43 @@ export default function Post({ params }: any) {
       {localComments &&
         localComments.map((e: any) => {
           return (
-            <div className="bg-neutral-600 flex flex-row max-h-[400px] shadow-2xl border my-1">
-              <div className="flex flex-col items-center bg-neutral-600 w-[200px]">
+            <div className="bg-neutral-700 flex flex-row max-h-[400px] shadow-2xl border my-1">
+              <div className="flex flex-col items-center bg-neutral-700 w-[200px]">
                 <img
-                  className="flex justify-center rounded-full max-w-[100px] max-h-[100px] border border-amber-500"
+                  className="flex justify-center rounded-full w-[100px] h-[100px] border border-amber-600"
                   src={e.author.image}
                   alt="commentpic"
                 ></img>
                 <div className="flex justify-center ">{e.author.userName}</div>
-                <h2 className="mt-auto justify-center flex bg-neutral-500 w-full border-r-2 border-neutral-600">
+                <h2 className="mt-auto justify-center flex bg-neutral-600 w-full border-r-2 border-neutral-700">
                   Se unió: {e.author.createdAt.slice(0, 10)}
                 </h2>
               </div>
-              <div className="flex flex-col bg-neutral-600 w-full">
-                <h6 className="flex justify-center bg-neutral-500">
+              <div className="flex flex-col bg-neutral-700 w-full">
+                <h6 className="flex justify-center bg-neutral-600">
                   Comentario Nº{e.id}
                 </h6>
                 <h4 className="flex p-3">{e.description}</h4>
-                <h2 className="mt-auto flex justify-end bg-neutral-500">
+                <img
+                  className="flex justify-center mb-1 max-w-full p-4 h-auto max-h-[300px]"
+                  src={e.image && e.image}
+                  alt={e.image}
+                ></img>
+                <h2 className="mt-auto flex justify-end bg-neutral-600">
                   Creado ahora mismo.
                 </h2>
               </div>
             </div>
           );
         })}
-      <div className="bg-neutral-600 flex flex-col h-auto max-h-[400px] shadow-2xl border my-1">
+      <div className="bg-neutral-700 flex flex-col h-auto max-h-[400px] shadow-2xl border my-1">
         <div className="flex justify-center h-auto bg-neutral-700">
           Agregar comentario
         </div>
-        <div className="flex justify-between">
+        <div className="flex flex-row justify-between">
           <textarea
             onChange={(e) => handleTextAreaChange(e)}
+            value={newComment.description}
             name="description"
             disabled={!connected ? true : false}
             placeholder={
@@ -232,15 +264,56 @@ export default function Post({ params }: any) {
                 ? "Escribe aquí el texto"
                 : "Logueate para poder comentar"
             }
-            className="w-full h-full my-1 border border-amber-500 bg-neutral-700"
+            className="w-full h-full my-1 border border-amber-600 bg-neutral-700"
           ></textarea>
           <button
             onClick={() => handleSendComment()}
             disabled={!connected ? true : false}
-            className="bg-amber-600 p-2 my-2 rounded mx-1"
+            className="bg-amber-700 p-2 my-2 rounded mx-1"
           >
             Comentar
           </button>
+        </div>
+        <div className="flex flex-row h-auto bg-neutral-900">
+          <input
+            className="hidden"
+            type="file"
+            name="image"
+            accept=".jpg, .jpeg, .png"
+            onChange={(e) => handleImageChange(e)}
+            id="fileInput"
+            placeholder="Sube tu foto de perfil"
+          />
+          <div className="relative">
+            <div className="flex flex-row space-x-4">
+              <label
+                htmlFor="fileInput"
+                className="flex justify-center ml-1 text-black p-2 h-[40px] w-[140px] bg-amber-700 font-semibold my-2 rounded cursor-pointer"
+              >
+                Agregar imagen
+              </label>
+              {newComment.image && (
+                <div className="relative">
+                  <img
+                    className="flex w-auto my-2 max-w-[400px] h-auto max-h-[300px]"
+                    src={newComment.image}
+                    alt="Imagen subida"
+                  />
+                  <button
+                    onClick={() =>
+                      setNewComment((prevData: any) => ({
+                        ...prevData,
+                        image: "",
+                      }))
+                    }
+                    className="absolute border border-amber-700 top-0 right-0 backdrop-blur-sm p-1 text-black rounded"
+                  >
+                    Quitar
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
