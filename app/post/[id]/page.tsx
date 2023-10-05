@@ -8,6 +8,8 @@ import like from "../../assets/like.svg";
 
 export default function Post({ params }: any) {
   const { id } = params;
+  const [bearer, setBearer] = useState<any>({});
+  const [author, setAuthor] = useState<any>({});
   const [connected, setConnected] = useState(false);
   const [fillHearth, setFillHearth] = useState(false);
   const [Hearth, setHearth] = useState(false);
@@ -39,6 +41,8 @@ export default function Post({ params }: any) {
         setConnected(true);
         newComment.authorId = parsedUserData.id;
         setNewLocalComment({ ...newLocalComment, author: parsedUserData });
+        setBearer({ bearer: parsedUserData.token });
+        setAuthor({parsedUserData})
       }
     }
   }, []);
@@ -76,16 +80,26 @@ export default function Post({ params }: any) {
 
   const handleSendComment = async () => {
     try {
-      console.log(newComment, "nuevo comentario antes de entrar en setlocal");
-      const resp = await axios.post(`${URL}/comment`, newComment);
-      setLocalComments([...localComments, newComment]);
+      const resp = await axios.post(`${URL}/comment`, newComment, {
+        headers: {
+          Authorization: `Bearer ${bearer.bearer}`,
+        },
+      });
+      setLocalComments([...localComments, newLocalComment]);
       setNewComment({
         description: "",
         image: "",
         authorId: newComment.authorId,
         postId: id,
       });
-      console.log(localComments, "localcoments post resp");
+      setNewLocalComment({
+        description: "",
+        image: "",
+        authorId: "",
+        postId: id,
+        author: author.parsedUserData,
+      })
+      console.log(localComments, resp, "localcoments post resp");
     } catch (err) {
       console.log(err);
     }
@@ -93,9 +107,17 @@ export default function Post({ params }: any) {
 
   const like = async () => {
     try {
-      const resp = await axios.post(`${URL}/user/like/${id}`, {
-        userId: newComment.authorId,
-      });
+      const resp = await axios.post(
+        `${URL}/user/like/${id}`,
+        {
+          userId: newComment.authorId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${bearer.bearer}`,
+          },
+        }
+      );
       console.log(resp, "resp");
       setLikes([...likes, +1]);
       setDisabledLike(true);
@@ -123,18 +145,18 @@ export default function Post({ params }: any) {
     }
   };
 
-  console.log(localComments, "asd");
+  console.log(localComments);
 
   return (
     <div className="flex flex-col min-h-screen h-auto w-auto min-w-[900px] max-w-[1000px]">
       {post.postFound && post.postFound && (
         <div
-          className="bg-neutral-700 flex flex-row h-auto min-h-[200px] w-auto min-w-[600px] shadow-2xl my-1" 
+          className="bg-neutral-700 flex flex-row h-auto min-h-[200px] w-auto min-w-[600px] shadow-2xl my-1"
           key={post.postFound.id}
         >
           <div className="flex flex-col items-center bg-neutral-700 border border-black w-[200px]">
             <img
-              className="flex justify-center rounded-full max-w-[90px] max-h-[90px] border border-amber-600"
+              className="flex justify-center rounded-full w-[90px] h-[90px] border border-amber-600"
               src={post.postFound.author.image}
               alt="userpic"
             ></img>
@@ -192,7 +214,7 @@ export default function Post({ params }: any) {
               <div className="flex flex-col items-center bg-neutral-700 w-[200px] border border-black">
                 <img
                   className="flex justify-center rounded-full w-[70px] h-[70px] border border-amber-600"
-                  src={e.author.image}
+                  src={e.author.image && e.author.image}
                   alt="commentpic"
                 ></img>
                 <div className="flex justify-center ">{e.author.userName}</div>
@@ -224,7 +246,7 @@ export default function Post({ params }: any) {
               <div className="flex flex-col items-center bg-neutral-700 w-[200px]">
                 <img
                   className="flex justify-center rounded-full w-[100px] h-[100px] border border-amber-600"
-                  src={e.author.image}
+                  src={e.author.image && e.author.image}
                   alt="commentpic"
                 ></img>
                 <div className="flex justify-center ">{e.author.userName}</div>

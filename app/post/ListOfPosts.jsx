@@ -17,19 +17,23 @@ export async function ListOfPosts() {
   return (
     <div className="flex flex-col bg-neutral-700">
       <div className="flex flex-row justify-center h-[50px] w-full shadow-md">
-        <h6 className="flex justify-center items-center font-bold text-amber-700">
+        <Link
+          href="/ranking"
+          as={`/ranking`}
+          className="flex justify-center items-center hover:text-amber-700 underline font-bold text-amber-500"
+        >
           RANKING
-        </h6>
+        </Link>
         {posts.data.rank &&
-          posts.data.rank.map((e) => {
+          posts.data.rank.map((e, index) => {
             return (
               <h6 className="flex justify-center items-center px-6 space-x-2">
                 <Link
                   href="/perfil/id"
                   as={`/perfil/${e.id}`}
-                  className="flex font-semibold text-amber-700 "
+                  className="flex font-semibold text-amber-700  hover:text-amber-500"
                 >
-                  {e.userName}
+                  {index + 1}. {e.userName}
                 </Link>
 
                 <span>{e.points}.P</span>

@@ -20,6 +20,7 @@ export default function Perfil() {
     job: "",
     university: "",
     career: "",
+    token: "",
     city: "",
     province: "",
     country: "",
@@ -59,7 +60,11 @@ export default function Perfil() {
     console.log(userData, "userdatanates");
     const resp = await axios.patch(
       `${URL}/user/${postData.authorId}`,
-      userData
+      userData, {
+        headers: {
+          Authorization: `Bearer ${userData.token}`,
+        },
+      }
     );
 
     if (resp.status !== 404) {

@@ -7,6 +7,7 @@ import { uploadFile } from "@/app/config/config";
 
 export default function CreatePost() {
   const [successMsg, setSuccessMsg] = useState(false);
+  const [token, setToken] = useState("");
   const [errorMsg, setErrorMsg] = useState(false);
   const [postData, setpostData] = useState({
     title: "",
@@ -21,6 +22,7 @@ export default function CreatePost() {
     if (item !== null) {
       const parsedUserData = JSON.parse(item);
       postData.authorId = parsedUserData.id;
+      setToken(parsedUserData.token);
     } else {
       redirect("/post");
     }
@@ -44,20 +46,22 @@ export default function CreatePost() {
   };
 
   const handleVerification = async () => {
-    const resp = await fetch(`${URL}/post`, {
-      method: "POST",
-      body: JSON.stringify(postData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const jsonResponse = await resp.json();
-    console.log("?");
-    console.log(jsonResponse, "respppp");
-    if (jsonResponse.status !== 404) {
-      console.log("post creado con exito");
+    if (postData.description && postData.title && postData.section) {
+      const resp = await axios.post(`${URL}/post`, postData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const jsonResponse = resp.data;
+      console.log(jsonResponse, "respppp");
+      if (jsonResponse.status !== 404) {
+        alert("post creado con exito");
+      } else {
+        setErrorMsg(true);
+        alert("hubo un error en la creacion");
+      }
     } else {
-      setErrorMsg(true);
+      alert("Los campos Tema, Titulo y Descripcion son obligatorios.");
     }
   };
 
@@ -78,7 +82,7 @@ export default function CreatePost() {
       alert(err);
     }
   };
-
+  console.log(postData, "postdadtaaaa");
   return (
     <div className="flex justify-center bg-neutral-500 h-screen">
       <div className="flex flex-col mx-2 h-[800px] w-[700px] bg-neutral-600 shadow-xl rounded mt-4">
@@ -99,24 +103,34 @@ export default function CreatePost() {
             <option>Empleos</option>
             <option>Educacion</option>
           </select>
-          <label className="flex justify-start font-semibold text-xl mt-4">
-            Titulo
+          <label className="flex justify-start items-center font-semibold text-xl mt-4">
+            Titulo{" "}
+            <span className="flex justify-center items-center text-sm">
+              (50Max.)
+            </span>
           </label>
           <input
-            className="flex items-center h-10 px-4 w-64 bg-neutral-400 placeholder:text-black mt-2 rounded focus:outline-none focus:ring-2"
+            className="flex items-center h-10 px-4 w-auto bg-neutral-400 placeholder:text-black mt-2 rounded focus:outline-none focus:ring-2"
             type="text"
             name="title"
             value={postData.title}
             onChange={(e) => handleInputChange(e)}
             placeholder="Titulo del posteo"
+            maxLength={50}
           />
-          <label className="font-semibold text-xl mt-4">Descripcionn</label>
+          <label className="flex flex-row font-semibold text-xl mt-4">
+            Descripción
+            <span className="flex justify-center items-center text-sm">
+              (500Max.)
+            </span>
+          </label>
           <textarea
             className="flex items-center min-w-full min-h-[100px] p-2 placeholder:text-black text-black bg-neutral-400 h-10 px-4 w-full mt-2 rounded focus:outline-none focus:ring-2"
             name="description"
             value={postData.description}
             onChange={(e) => handleTextAreaChange(e)}
             placeholder="Descripcion del post"
+            maxLength={500}
           />
           <label className="font-semibold text-xl mt-4">Agregar imagen</label>
           <input

@@ -21,19 +21,12 @@ export default function Login() {
   };
 
   const handleVerification = async () => {
-    const resp = await fetch(`${URL}/user/login`, {
-      method: "POST",
-      body: JSON.stringify(userData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const jsonResponse = await resp.json();
-    console.log(jsonResponse, "respppp")
-    if (jsonResponse.status !== 404) {
-      localStorage.setItem("user", JSON.stringify(jsonResponse.user));
+    try {
+      const resp = await axios.post(`${URL}/user/login`, userData);
+      console.log(resp);
+      localStorage.setItem("user", JSON.stringify(resp.data.user));
       window.location.href = "/post";
-    } else {
+    } catch (err) {
       setErrorMsg(true);
     }
   };
@@ -63,7 +56,9 @@ export default function Login() {
             onChange={(e) => handleInputChange(e)}
             placeholder="Contraseña"
           />
-          {errorMsg ? (<h4 className="text-red-500">Credenciales invalidas</h4>) : null}
+          {errorMsg ? (
+            <h4 className="text-red-500">Credenciales invalidas</h4>
+          ) : null}
           <button
             onClick={() => handleVerification()}
             type="button"
