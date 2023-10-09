@@ -1,6 +1,7 @@
 import { URL } from "@/utils/constants";
 import Link from "next/link";
 import axios from "axios";
+import { Ranking } from "../components/Ranking";
 
 const fetchPost = async () => {
   try {
@@ -16,32 +17,8 @@ export async function ListOfPosts() {
   console.log("ppppp");
   return (
     <div className="flex flex-col bg-neutral-700">
-      <div className="flex flex-row justify-center h-[50px] w-full shadow-md">
-        <Link
-          href="/ranking"
-          as={`/ranking`}
-          className="flex justify-center items-center hover:text-amber-700 underline font-bold text-amber-500"
-        >
-          RANKING
-        </Link>
-        {posts.data.rank &&
-          posts.data.rank.map((e, index) => {
-            return (
-              <h6 className="flex justify-center items-center px-6 space-x-2">
-                <Link
-                  href="/perfil/id"
-                  as={`/perfil/${e.id}`}
-                  className="flex font-semibold text-amber-700  hover:text-amber-500"
-                >
-                  {index + 1}. {e.userName}
-                </Link>
-
-                <span>{e.points}.P</span>
-              </h6>
-            );
-          })}
-      </div>
-      <div className="flex flex-row space-x-1">
+      <Ranking />
+      <div className="flex justify-center flex-row space-x-1">
         <div className="flex flex-col max-w-[250px]">
           <h6 className="flex justify-center font-bold text-2xl text-amber-700">
             Nuevos Post
@@ -57,7 +34,7 @@ export async function ListOfPosts() {
                   {e.title}
                 </Link>
                 <h1 className="flex text-sm justify-center items-center my-4 p-1">
-                  {e.description}
+                  {e.description.slice(0, 200)}
                 </h1>
                 <img
                   className="flex justify-center mb-1 max-w-full h-auto max-h-[300px]"
@@ -120,7 +97,7 @@ export async function ListOfPosts() {
                   {e.title}
                 </Link>
                 <h1 className="flex text-sm justify-center items-center my-4 p-1">
-                  {e.description}
+                  {e.description.slice(0, 200)}
                 </h1>
                 <img
                   className="flex justify-center mb-1 max-w-full h-auto max-h-[300px]"
@@ -183,7 +160,7 @@ export async function ListOfPosts() {
                   {e.title}
                 </Link>
                 <h1 className="flex text-sm justify-center items-center my-4 p-1">
-                  {e.description}
+                  {e.description.slice(0, 200)}
                 </h1>
                 <img
                   className="flex justify-center mb-1 max-w-full h-auto max-h-[300px]"
@@ -246,7 +223,7 @@ export async function ListOfPosts() {
                   {e.title}
                 </Link>
                 <h1 className="flex text-sm justify-center items-center my-4 p-1">
-                  {e.description}
+                  {e.description.slice(0, 200)}
                 </h1>
                 <img
                   className="flex justify-center mb-1 max-w-full h-auto max-h-[300px]"

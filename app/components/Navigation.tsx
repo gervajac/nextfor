@@ -52,12 +52,12 @@ export function Navigation() {
           <Link
             href="/section/programacion"
             as={`/section/programacion`}
-            onMouseEnter={() => {
-              setOpen1(true);
-              setOpen2(false);
-              setOpen3(false);
-              setOpen4(false);
-            }}
+            // onMouseEnter={() => {
+            //   setOpen1(true);
+            //   setOpen2(false);
+            //   setOpen3(false);
+            //   setOpen4(false);
+            // }}
             className="cursor-pointer text-white hover:text-amber-700 p-2 rounded"
           >
             Programacion
@@ -83,12 +83,12 @@ export function Navigation() {
           <Link
             href="/section/empleos"
             as={`/section/empleos`}
-            onMouseEnter={() => {
-              setOpen1(false);
-              setOpen2(true);
-              setOpen3(false);
-              setOpen4(false);
-            }}
+            // onMouseEnter={() => {
+            //   setOpen1(false);
+            //   setOpen2(true);
+            //   setOpen3(false);
+            //   setOpen4(false);
+            // }}
             className="cursor-pointer text-white hover:text-amber-700 p-2 rounded"
           >
             Empleos
@@ -111,12 +111,12 @@ export function Navigation() {
           <Link
             href="/section/educacion"
             as={`/section/educacion`}
-            onMouseEnter={() => {
-              setOpen1(false);
-              setOpen2(false);
-              setOpen3(false);
-              setOpen4(true);
-            }}
+            // onMouseEnter={() => {
+            //   setOpen1(false);
+            //   setOpen2(false);
+            //   setOpen3(false);
+            //   setOpen4(true);
+            // }}
             className="cursor-pointer text-white hover:text-amber-700 p-2 rounded"
           >
             Educacion
@@ -190,43 +190,46 @@ export function Navigation() {
           ) : (
             <div className="relative group">
               <div className="flex flex-row">
-                <div
-                  onMouseEnter={() => {
-                    setOpen1(false);
-                    setOpen2(false);
-                    setOpen3(true);
-                    setOpen4(false);
+                <button
+                  onClick={() => {
+                    !open3 ? setOpen3(true) : setOpen3(false);
                   }}
+                  // onMouseEnter={() => {
+                  //   setOpen1(false);
+                  //   setOpen2(false);
+                  //   setOpen3(true);
+                  //   setOpen4(false);
+                  // }}
                   className="cursor-pointer text-white p-2 rounded"
                 >
                   <img
                     src={userData && userData}
                     className="flex border-2 border-amber-600 w-[40px] h-[40px]"
                   />
-                </div>
+                </button>
               </div>
               <div
                 onMouseLeave={() => setOpen3(false)}
                 className={`${
                   open3 ? "block" : "hidden"
-                } bg-amber-400 absolute mt-2 shadow-md rounded min-w-[80px] w-auto`}
+                } bg-amber-700 absolute mt-2 shadow-md rounded min-w-[80px] w-auto`}
               >
                 <div className="flex flex-col items-center">
                   <Link
                     href="/perfil"
-                    className="cursor-pointer text-black hover:text-white"
+                    className="cursor-pointer font-semibold text-xl text-black hover:text-white"
                   >
                     Perfil
                   </Link>
-                  <button className="cursor-pointer text-black hover:text-white">
+                  <button className="cursor-pointer font-semibold text-xl text-black hover:text-white">
                     Muro
                   </button>
-                  <button className="cursor-pointer text-black hover:text-white">
+                  <button className="cursor-pointer font-semibold text-xl text-black hover:text-white">
                     Post
                   </button>
                   <button
                     onClick={() => logOut()}
-                    className="cursor-pointer text-black hover:text-white"
+                    className="cursor-pointer text-black font-semibold text-xl hover:text-white"
                   >
                     Salir
                   </button>

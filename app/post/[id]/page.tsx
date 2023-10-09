@@ -5,6 +5,7 @@ import { Comment } from "./Comment";
 import axios from "axios";
 import { uploadFile } from "@/app/config/config";
 import like from "../../assets/like.svg";
+import Link from "next/link";
 
 export default function Post({ params }: any) {
   const { id } = params;
@@ -17,6 +18,8 @@ export default function Post({ params }: any) {
   const [parsedData, setParsedData] = useState({});
   const [likes, setLikes] = useState<any>([]);
   const [post, setPost] = useState<any>([]);
+  const [totalPages, setTotalPages] = useState<any>([]);
+  const [actualPage, setActualPage] = useState<number>(1);
   const [newComment, setNewComment] = useState({
     description: "",
     image: "",
@@ -42,7 +45,7 @@ export default function Post({ params }: any) {
         newComment.authorId = parsedUserData.id;
         setNewLocalComment({ ...newLocalComment, author: parsedUserData });
         setBearer({ bearer: parsedUserData.token });
-        setAuthor({parsedUserData})
+        setAuthor({ parsedUserData });
       }
     }
   }, []);
@@ -50,10 +53,13 @@ export default function Post({ params }: any) {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`${URL}/comment/${id}`);
+        const response = await axios.get(
+          `${URL}/comment/${id}?page=${actualPage}&perPage=10`
+        );
         console.log(response.data, "respuesta del post");
         setPost(response.data);
         setLikes(response.data.likes);
+        setTotalPages(response.data.pagination.numbersArray);
         const log = response.data.likes.some(
           (e: any) => e === newComment.authorId
         );
@@ -68,7 +74,7 @@ export default function Post({ params }: any) {
     };
 
     fetchPost();
-  }, []);
+  }, [actualPage]);
 
   const handleTextAreaChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -98,7 +104,7 @@ export default function Post({ params }: any) {
         authorId: "",
         postId: id,
         author: author.parsedUserData,
-      })
+      });
       console.log(localComments, resp, "localcoments post resp");
     } catch (err) {
       console.log(err);
@@ -145,7 +151,7 @@ export default function Post({ params }: any) {
     }
   };
 
-  console.log(localComments);
+  console.log(connected);
 
   return (
     <div className="flex flex-col min-h-screen h-auto w-auto min-w-[900px] max-w-[1000px]">
@@ -174,11 +180,17 @@ export default function Post({ params }: any) {
             <h4 className="flex p-3 font-semibold ">
               {post.postFound.description}
             </h4>
-            <img
-              className="flex justify-center mb-1 max-w-full p-4 h-auto max-h-[300px]"
-              src={post.postFound.image && post.postFound.image}
-              alt={post.postFound.image}
-            ></img>
+            {post.postFound.image && (
+              <Link href={post.postFound.image}>
+                <a>
+                  <img
+                    className="flex justify-center mb-1 w-auto p-4 h-auto max-h-[300px]"
+                    src={post.postFound.image}
+                    alt={post.postFound.image}
+                  />
+                </a>
+              </Link>
+            )}
             <h2 className="mt-auto flex justify-around bg-neutral-600">
               <div className="flex flex-row items-center">
                 <button
@@ -203,7 +215,26 @@ export default function Post({ params }: any) {
           </div>
         </div>
       )}
-
+      {totalPages.length !== 1 && (
+        <h6 className="flex justify-center">
+          <span className="flex flex-row space-x-2">
+            <h5>Paginas</h5>
+            {totalPages &&
+              totalPages.map((e: number) => {
+                return (
+                  <button
+                    className={
+                      actualPage === e ? "text-amber-600" : "text-white"
+                    }
+                    onClick={() => setActualPage(e)}
+                  >
+                    {e}
+                  </button>
+                );
+              })}
+          </span>
+        </h6>
+      )}
       {post.commentsFound &&
         post.commentsFound.map((e: any) => {
           return (
@@ -223,15 +254,16 @@ export default function Post({ params }: any) {
                 </h2>
               </div>
               <div className="flex flex-col bg-neutral-700 w-full">
-                <h6 className="flex justify-center bg-neutral-600">
-                  Comentario Nº{e.id}
-                </h6>
                 <h4 className="flex p-3">{e.description}</h4>
-                <img
-                  className="flex justify-center mb-1 max-w-full p-4 h-auto max-h-[300px]"
-                  src={e.image && e.image}
-                  alt={e.image && e.image}
-                ></img>
+                {e.image && (
+                  <Link href={e.image}>
+                    <img
+                      className="flex justify-center mb-1 w-auto p-4 h-auto max-h-[300px]"
+                      src={e.image}
+                      alt={e.image}
+                    />
+                  </Link>
+                )}
                 <h2 className="mt-auto flex justify-end bg-neutral-600">
                   {e.createdAt.slice(0, 10)}
                 </h2>
@@ -259,11 +291,15 @@ export default function Post({ params }: any) {
                   Comentario Nº{e.id}
                 </h6>
                 <h4 className="flex p-3">{e.description}</h4>
-                <img
-                  className="flex justify-center mb-1 max-w-full p-4 h-auto max-h-[300px]"
-                  src={e.image && e.image}
-                  alt={e.image}
-                ></img>
+                {e.image && (
+                  <Link href={e.image}>
+                    <img
+                      className="flex justify-center mb-1 w-auto p-4 h-auto max-h-[300px]"
+                      src={e.image}
+                      alt={e.image}
+                    />
+                  </Link>
+                )}
                 <h2 className="mt-auto flex justify-end bg-neutral-600">
                   Creado ahora mismo.
                 </h2>
@@ -296,47 +332,50 @@ export default function Post({ params }: any) {
             Comentar
           </button>
         </div>
-        <div className="flex flex-row h-auto bg-neutral-900">
-          <input
-            className="hidden"
-            type="file"
-            name="image"
-            accept=".jpg, .jpeg, .png"
-            onChange={(e) => handleImageChange(e)}
-            id="fileInput"
-            placeholder="Sube tu foto de perfil"
-          />
-          <div className="relative">
-            <div className="flex flex-row space-x-4">
-              <label
-                htmlFor="fileInput"
-                className="flex justify-center ml-1 text-black p-2 h-[40px] w-[140px] bg-amber-700 font-semibold my-2 rounded cursor-pointer"
-              >
-                Agregar imagen
-              </label>
-              {newComment.image && (
-                <div className="relative">
-                  <img
-                    className="flex w-auto my-2 max-w-[400px] h-auto max-h-[300px]"
-                    src={newComment.image}
-                    alt="Imagen subida"
-                  />
-                  <button
-                    onClick={() =>
-                      setNewComment((prevData: any) => ({
-                        ...prevData,
-                        image: "",
-                      }))
-                    }
-                    className="absolute border border-amber-700 top-0 right-0 backdrop-blur-sm p-1 text-black rounded"
-                  >
-                    Quitar
-                  </button>
-                </div>
-              )}
+        {connected && (
+          <div className="flex flex-row h-auto bg-neutral-900">
+            <input
+              className="hidden"
+              type="file"
+              disabled={!connected ? true : false}
+              name="image"
+              accept=".jpg, .jpeg, .png"
+              onChange={(e) => handleImageChange(e)}
+              id="fileInput"
+              placeholder="Sube tu foto de perfil"
+            />
+            <div className="relative">
+              <div className="flex flex-row space-x-4">
+                <label
+                  htmlFor="fileInput"
+                  className="flex justify-center ml-1 text-black p-2 h-[40px] w-[140px] bg-amber-700 font-semibold my-2 rounded cursor-pointer"
+                >
+                  Agregar imagen
+                </label>
+                {newComment.image && (
+                  <div className="relative">
+                    <img
+                      className="flex w-auto my-2 max-w-[400px] h-auto max-h-[300px]"
+                      src={newComment.image}
+                      alt="Imagen subida"
+                    />
+                    <button
+                      onClick={() =>
+                        setNewComment((prevData: any) => ({
+                          ...prevData,
+                          image: "",
+                        }))
+                      }
+                      className="absolute border border-amber-700 top-0 right-0 backdrop-blur-sm p-1 text-black rounded"
+                    >
+                      Quitar
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
