@@ -18,7 +18,7 @@ export default async function Ranking() {
 
   return (
     <div className="flex justify-center">
-      <div className="flex justify-center items-center flex-col h-auto w-[900px] bg-neutral-700 shadow-2xl">
+      <div className="flex justify-center items-center flex-col min-h-screen h-auto w-[900px] bg-neutral-700 shadow-2xl">
         <div className="flex flex-col justify-center bg-neutral-700 w-full h-[auto] border-b-2 border-amber-600">
           <h6 className="flex justify-center text-3xl m-3 text-amber-600">
             TOP Usuarios

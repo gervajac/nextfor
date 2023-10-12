@@ -46,7 +46,7 @@ export default function Login() {
         <div className="flex justify-center text-2xl border-b-4 border-amber-700 items-center h-[100px] bg-neutral-600 rounded">
           Registro de usuario
         </div>
-        <div className="flex items-center flex-col text-black">
+        <form className="flex items-center flex-col text-black">
           <label className="font-semibold text-xs mt-4">Username</label>
           <input
             className="flex items-center h-10 px-4 w-64 bg-neutral-300 mt-2 rounded focus:outline-none focus:ring-2"
@@ -91,7 +91,7 @@ export default function Login() {
           >
             Registrarse
           </button>
-        </div>
+        </form>
       </div>
     </div>
   );

@@ -182,13 +182,11 @@ export default function Post({ params }: any) {
             </h4>
             {post.postFound.image && (
               <Link href={post.postFound.image}>
-                <a>
-                  <img
-                    className="flex justify-center mb-1 w-auto p-4 h-auto max-h-[300px]"
-                    src={post.postFound.image}
-                    alt={post.postFound.image}
-                  />
-                </a>
+                <img
+                  className="flex justify-center mb-1 w-auto p-4 h-auto max-h-[300px]"
+                  src={post.postFound.image}
+                  alt={post.postFound.image}
+                />
               </Link>
             )}
             <h2 className="mt-auto flex justify-around bg-neutral-600">
