@@ -64,7 +64,10 @@ export default async function SectionListing({ params }: any) {
           {data &&
             data.post.map((e: any) => {
               return (
-                <div className="flex flex-row w-full h-[100px] bg-neutral-600 border-2 border-neutral-800">
+                <div
+                  key={e.id}
+                  className="flex flex-row w-full h-[100px] bg-neutral-600 border-2 border-neutral-800"
+                >
                   <div className="flex w-[50px] justify-center items-center">
                     IMG
                   </div>
@@ -81,7 +84,9 @@ export default async function SectionListing({ params }: any) {
                     </h2>
                   </div>
                   <div className="flex flex-row w-[150px] justify-end items-center ml-auto space-x-4 mr-2">
-                    <h5 className="flex mr-8">{e.comments && e.comments.length}</h5>
+                    <h5 className="flex mr-8">
+                      {e.comments && e.comments.length}
+                    </h5>
                     <h5 className="">{e.createdAt.slice(0, 10)}</h5>
                   </div>
                 </div>

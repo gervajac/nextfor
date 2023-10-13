@@ -23,10 +23,10 @@ export async function ListOfPosts() {
           <h6 className="flex justify-center font-bold text-2xl text-amber-700">
             Nuevos Post
           </h6>
-          {posts.data.post.length >= 1 ? (
-            posts.data.post.map((e) => {
+          {posts?.data.post.length >= 1 ? (
+            posts?.data.post.map((e: any) => {
               return (
-                <div className="flex flex-col my-0.5 bg-neutral-700 border border-neutral-600 shadow-2xl p-1">
+                <div key={e.id} className="flex flex-col my-0.5 bg-neutral-700 border border-neutral-600 shadow-2xl p-1">
                   <Link
                     href="/posts/id"
                     as={`/post/${e.id}`}
@@ -118,10 +118,10 @@ export async function ListOfPosts() {
           <h6 className="flex justify-center font-bold  text-2xl text-amber-700">
             Programacion
           </h6>
-          {posts.data.programacion.length >= 1 ? (
-            posts.data.programacion.map((e) => {
+          {posts?.data.programacion.length >= 1 ? (
+            posts?.data.programacion.map((e: any) => {
               return (
-                <div className="flex flex-col my-0.5 bg-neutral-700 border border-neutral-600 border-t-2 border-t-green-600 shadow-2xl p-1">
+                <div key={e.id} className="flex flex-col my-0.5 bg-neutral-700 border border-neutral-600 border-t-2 border-t-green-600 shadow-2xl p-1">
                   <Link
                     href="/posts/id"
                     as={`/post/${e.id}`}
@@ -213,10 +213,10 @@ export async function ListOfPosts() {
           <h6 className="flex justify-center font-bold text-2xl text-amber-700">
             Empleos
           </h6>
-          {posts.data.empleos.length >= 1 ? (
-            posts.data.empleos.map((e) => {
+          {posts?.data.empleos.length >= 1 ? (
+            posts?.data.empleos.map((e: any) => {
               return (
-                <div className="flex flex-col my-0.5 bg-neutral-700 border border-t-2 border-t-blue-600 border-neutral-600 shadow-2xl p-1">
+                <div key={e.id} className="flex flex-col my-0.5 bg-neutral-700 border border-t-2 border-t-blue-600 border-neutral-600 shadow-2xl p-1">
                   <Link
                     href="/posts/id"
                     as={`/post/${e.id}`}
@@ -308,10 +308,10 @@ export async function ListOfPosts() {
           <h6 className="flex justify-center font-bold text-2xl text-amber-700">
             Cursos/Educacion
           </h6>
-          {posts.data.educacion.length >= 1 ? (
-            posts.data.educacion.map((e) => {
+          {posts?.data.educacion.length >= 1 ? (
+            posts?.data.educacion.map((e: any) => {
               return (
-                <div className="flex flex-col bg-neutral-700 my-0.5 border border-t-2 border-t-yellow-600 border-neutral-600 shadow-2xl p-1">
+                <div key={e.id} className="flex flex-col bg-neutral-700 my-0.5 border border-t-2 border-t-yellow-600 border-neutral-600 shadow-2xl p-1">
                   <Link
                     href="/posts/id"
                     as={`/post/${e.id}`}

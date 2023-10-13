@@ -61,7 +61,10 @@ export default async function Ranking() {
           {resp &&
             resp.data.map((e: any, index: number) => {
               return (
-                <div className="flex flex-row w-full h-[100px] bg-neutral-600 border-2 border-neutral-800">
+                <div
+                  key={e.id}
+                  className="flex flex-row w-full h-[100px] bg-neutral-600 border-2 border-neutral-800"
+                >
                   <div className="flex w-[50px] justify-center items-center">
                     {index + 1}
                   </div>

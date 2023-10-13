@@ -221,6 +221,7 @@ export default function Post({ params }: any) {
               totalPages.map((e: number) => {
                 return (
                   <button
+                    key={e}
                     className={
                       actualPage === e ? "text-amber-600" : "text-white"
                     }
@@ -272,7 +273,10 @@ export default function Post({ params }: any) {
       {localComments &&
         localComments.map((e: any) => {
           return (
-            <div className="bg-neutral-700 flex flex-row max-h-[400px] shadow-2xl border my-1">
+            <div
+              key={e.id}
+              className="bg-neutral-700 flex flex-row max-h-[400px] shadow-2xl border my-1"
+            >
               <div className="flex flex-col items-center bg-neutral-700 w-[200px]">
                 <img
                   className="flex justify-center rounded-full w-[100px] h-[100px] border border-amber-600"
@@ -306,9 +310,7 @@ export default function Post({ params }: any) {
           );
         })}
       <div className="bg-neutral-600 flex flex-col h-auto max-h-[400px] shadow-2xl border my-1">
-        <div className="flex justify-center h-auto ">
-          Agregar comentario
-        </div>
+        <div className="flex justify-center h-auto ">Agregar comentario</div>
         <div className="flex flex-row justify-between">
           <textarea
             onChange={(e) => handleTextAreaChange(e)}

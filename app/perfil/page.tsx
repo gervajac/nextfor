@@ -60,7 +60,8 @@ export default function Perfil() {
     console.log(userData, "userdatanates");
     const resp = await axios.patch(
       `${URL}/user/${postData.authorId}`,
-      userData, {
+      userData,
+      {
         headers: {
           Authorization: `Bearer ${userData.token}`,
         },
@@ -127,6 +128,7 @@ export default function Perfil() {
               avatarList.map((e, index) => {
                 return (
                   <button
+                    key={index}
                     onClick={() =>
                       setUserData((prevState) => ({ ...prevState, image: e }))
                     }

@@ -174,7 +174,10 @@ export default function Perfil({ params }: any) {
           {active ? (
             post.map((e: any) => {
               return (
-                <div className="flex flex-row w-full h-[100px] bg-neutral-600 border-2 border-neutral-800">
+                <div
+                  key={e.id}
+                  className="flex flex-row w-full h-[100px] bg-neutral-600 border-2 border-neutral-800"
+                >
                   <div className="flex w-auto ml-1 justify-center items-center">
                     {e.section}
                   </div>
@@ -201,7 +204,10 @@ export default function Perfil({ params }: any) {
               {commentsList && commentsList.length >= 1 ? (
                 commentsList.map((e: any) => {
                   return (
-                    <div className="flex flex-row w-full h-auto bg-neutral-600 border-2 border-neutral-900">
+                    <div
+                      key={e.id}
+                      className="flex flex-row w-full h-auto bg-neutral-600 border-2 border-neutral-900"
+                    >
                       <div className="flex flex-col justify-center items-center p-3">
                         <img className="flex w-[50px]" src={e.image}></img>
                         <h5 className="flex font-bold">{e.userName}</h5>
@@ -225,7 +231,10 @@ export default function Perfil({ params }: any) {
               {localComment && localComment.length >= 1
                 ? localComment.map((e: any) => {
                     return (
-                      <div className="flex flex-row w-full h-auto bg-neutral-600 border-2 border-neutral-900">
+                      <div
+                        key={e.index}
+                        className="flex flex-row w-full h-auto bg-neutral-600 border-2 border-neutral-900"
+                      >
                         <div className="flex flex-col justify-center items-center p-3">
                           <img className="flex w-[50px]" src={e.image}></img>
                           <h5 className="flex font-bold">{e.userName}</h5>
@@ -240,7 +249,11 @@ export default function Perfil({ params }: any) {
               <div className="flex flex-row w-auto ml-1 justify-center items-center">
                 <textarea
                   name="description"
-                  placeholder={!connected ? "Debes loguearte para poder comentar" : "Introduce aquí tu comentario"}
+                  placeholder={
+                    !connected
+                      ? "Debes loguearte para poder comentar"
+                      : "Introduce aquí tu comentario"
+                  }
                   disabled={!connected ? true : false}
                   onChange={(event) => handleTextAreaChange(event)}
                   className="flex w-full border border-amber-700 h-full bg-neutral-500"

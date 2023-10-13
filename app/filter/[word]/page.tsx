@@ -33,7 +33,7 @@ export default function SectionListing({ params }: any) {
             <span className="flex flex-row">
               <h6 className="flex text-2xl m-3">Resultados para búsqueda:</h6>
               <h6 className="flex text-2xl font-bold m-3 text-amber-600">
-                "{word}"
+                &ldquo;{word}&rdquo;
               </h6>
             </span>
             <div className="flex mr-4">
@@ -48,14 +48,22 @@ export default function SectionListing({ params }: any) {
           <div className="flex justify-around flex-row bg-neutral-800 w-full space-x-4">
             <button
               onClick={() => setPostActive(true)}
-              className={postActive ? "flex justify-center space-x-2 text-xl w-full bg-neutral-600" : "flex justify-center space-x-2 text-xl w-full bg-neutral-800"}
+              className={
+                postActive
+                  ? "flex justify-center space-x-2 text-xl w-full bg-neutral-600"
+                  : "flex justify-center space-x-2 text-xl w-full bg-neutral-800"
+              }
             >
               <h6>Posts </h6>
               <h6 className="text-amber-700 font-bold">{postData.length}</h6>
             </button>
             <button
               onClick={() => setPostActive(false)}
-              className={!postActive ? "flex justify-center space-x-2 text-xl w-full bg-neutral-600" : "flex justify-center space-x-2 text-xl w-full bg-neutral-800"}
+              className={
+                !postActive
+                  ? "flex justify-center space-x-2 text-xl w-full bg-neutral-600"
+                  : "flex justify-center space-x-2 text-xl w-full bg-neutral-800"
+              }
             >
               <h6>Usuarios</h6>
               <h6 className="text-amber-700 font-bold">{UserData.length}</h6>
@@ -79,7 +87,10 @@ export default function SectionListing({ params }: any) {
             {postData &&
               postData.map((e: any) => {
                 return (
-                  <div className="flex flex-row w-full h-[100px] bg-neutral-600 border-2 border-neutral-800">
+                  <div
+                    key={e.id}
+                    className="flex flex-row w-full h-[100px] bg-neutral-600 border-2 border-neutral-800"
+                  >
                     <div className="flex w-[50px] justify-center items-center">
                       IMG
                     </div>
@@ -122,7 +133,10 @@ export default function SectionListing({ params }: any) {
             {UserData &&
               UserData.map((e: any) => {
                 return (
-                  <div className="flex flex-row w-full h-[100px] bg-neutral-600 border-2 border-neutral-800">
+                  <div
+                    key={e.id}
+                    className="flex flex-row w-full h-[100px] bg-neutral-600 border-2 border-neutral-800"
+                  >
                     <div className="flex w-[50px] justify-center items-center">
                       <img
                         src={e.image}
