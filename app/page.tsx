@@ -15,7 +15,7 @@ const fetchPost = async () => {
 export default async function Home() {
   const posts = await fetchPost();
   const data = posts?.data;
-  console.log(data, "Datasio no?")
+  console.log(data, "Datasio no?");
   return (
     <section className="flex justify-center items-start min-h-screen h-[2000px] w-full bg-neutral-800">
       <div className="flex flex-col min-w-[900px] min-h-screen bg-neutral-700">
@@ -50,6 +50,7 @@ export default async function Home() {
                     <div className="flex items-center flex-row w-full bg-neutral-600 space-x-1">
                       <img
                         src={e.author.image}
+                        alt={e.image}
                         className="flex w-[40px] h-[40px]"
                       ></img>
                       <Link
@@ -125,7 +126,7 @@ export default async function Home() {
               </div>
             )}
           </div>
-          <div className="flex flex-col max-w-[250px]">
+          {/* <div className="flex flex-col max-w-[250px]">
             <h6 className="flex justify-center font-bold  text-2xl text-amber-700">
               Programacion
             </h6>
@@ -433,7 +434,7 @@ export default async function Home() {
                 </div>
               </div>
             )}
-          </div>
+          </div>*/}
         </div>
       </div>
     </section>
