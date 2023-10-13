@@ -14,7 +14,7 @@ const fetchPost = async () => {
 
 export async function ListOfPosts() {
   const posts = await fetchPost();
-  console.log("ppppp");
+  console.log(posts);
   return (
     <div className="flex flex-col min-w-[900px] min-h-screen bg-neutral-700">
       <Ranking />
