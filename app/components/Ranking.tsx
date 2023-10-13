@@ -51,7 +51,7 @@ export function Ranking() {
               key={index}
             >
               <button className="flex font-semibold text-amber-700 hover:text-amber-500">
-                <h5
+                <span
                   className={
                     ((index + currentIndex) % 10) + 1 === 1
                       ? "flex flex-row space-x-1 text-amber-600 font-bold"
@@ -62,7 +62,7 @@ export function Ranking() {
                   <Link href={`/perfil/${e.id}`}>
                     {e.userName && e.userName}
                   </Link>
-                </h5>
+                </span>
               </button>
               <span>{e.points && e.points}.P</span>
             </h6>

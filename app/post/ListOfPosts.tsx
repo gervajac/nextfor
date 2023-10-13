@@ -8,7 +8,7 @@ const fetchPost = async () => {
     const resp = await axios.get(`${URL}/post`);
     return resp;
   } catch (err) {
-    console.log(err);
+    console.log(err, "que es este error?");
   }
 };
 
