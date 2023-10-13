@@ -305,8 +305,8 @@ export default function Post({ params }: any) {
             </div>
           );
         })}
-      <div className="bg-neutral-700 flex flex-col h-auto max-h-[400px] shadow-2xl border my-1">
-        <div className="flex justify-center h-auto bg-neutral-700">
+      <div className="bg-neutral-600 flex flex-col h-auto max-h-[400px] shadow-2xl border my-1">
+        <div className="flex justify-center h-auto ">
           Agregar comentario
         </div>
         <div className="flex flex-row justify-between">
@@ -320,7 +320,7 @@ export default function Post({ params }: any) {
                 ? "Escribe aquí el texto"
                 : "Logueate para poder comentar"
             }
-            className="w-full h-full my-1 border border-amber-600 bg-neutral-700"
+            className="w-full h-full my-1 ml-2 bg-neutral-700 shadow-md"
           ></textarea>
           <button
             onClick={() => handleSendComment()}
@@ -331,7 +331,7 @@ export default function Post({ params }: any) {
           </button>
         </div>
         {connected && (
-          <div className="flex flex-row h-auto bg-neutral-900">
+          <div className="flex flex-row h-auto bg-neutral-600">
             <input
               className="hidden"
               type="file"
