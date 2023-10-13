@@ -34,8 +34,6 @@ export function Ranking() {
     return () => clearInterval(interval);
   }, [currentIndex, ranking]);
 
-  console.log(ranking.length, "????")
-
   return (
     <div className="flex flex-row justify-center space-x-2 h-[50px] w-full shadow-md">
       <Link
