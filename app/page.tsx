@@ -14,6 +14,7 @@ const fetchPost = async () => {
 
 export default async function Home() {
   const posts = await fetchPost();
+  const data = posts?.data;
   return (
     <section className="flex justify-center items-start min-h-screen h-[2000px] w-full bg-neutral-800">
       <div className="flex flex-col min-w-[900px] min-h-screen bg-neutral-700">
@@ -23,8 +24,8 @@ export default async function Home() {
             <h6 className="flex justify-center font-bold text-2xl text-amber-700">
               Nuevos Post
             </h6>
-            {posts?.data.post.length >= 1 ? (
-              posts?.data.post.map((e: any) => {
+            {data.post.length >= 1 ? (
+              data.post.map((e: any) => {
                 return (
                   <div
                     key={e.id}
@@ -127,8 +128,8 @@ export default async function Home() {
             <h6 className="flex justify-center font-bold  text-2xl text-amber-700">
               Programacion
             </h6>
-            {posts?.data.programacion.length >= 1 ? (
-              posts?.data.programacion.map((e: any) => {
+            {data.programacion.length >= 1 ? (
+              data.programacion.map((e: any) => {
                 return (
                   <div
                     key={e.id}
@@ -230,8 +231,8 @@ export default async function Home() {
             <h6 className="flex justify-center font-bold text-2xl text-amber-700">
               Empleos
             </h6>
-            {posts?.data.empleos.length >= 1 ? (
-              posts?.data.empleos.map((e: any) => {
+            {data.empleos.length >= 1 ? (
+              data.empleos.map((e: any) => {
                 return (
                   <div
                     key={e.id}
@@ -333,8 +334,8 @@ export default async function Home() {
             <h6 className="flex justify-center font-bold text-2xl text-amber-700">
               Cursos/Educacion
             </h6>
-            {posts?.data.educacion.length >= 1 ? (
-              posts?.data.educacion.map((e: any) => {
+            {data.educacion.length >= 1 ? (
+              data.educacion.map((e: any) => {
                 return (
                   <div
                     key={e.id}
