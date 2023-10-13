@@ -95,7 +95,7 @@ export default function SectionListing({ params }: any) {
                       IMG
                     </div>
                     <div className="flex w-auto justify-center flex-col items-start ml-4">
-                      <Link href="/posts/id" as={`/post/${e.id}`}>
+                      <Link href="/post/id" as={`/post/${e.id}`}>
                         <h5 className="text-xl hover:text-amber-700">
                           {e.title}
                         </h5>
