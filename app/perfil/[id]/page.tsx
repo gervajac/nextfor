@@ -182,7 +182,7 @@ export default function Perfil({ params }: any) {
                     {e.section}
                   </div>
                   <div className="flex w-[700px] justify-center flex-col items-start ml-4">
-                    <Link href="/posts/id" as={`/post/${e.id}`}>
+                    <Link href="/post/id" as={`/post/${e.id}`}>
                       <h5 className="text-xl hover:text-amber-700">
                         {e.title}
                       </h5>

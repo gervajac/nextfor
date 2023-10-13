@@ -28,7 +28,7 @@ export async function ListOfPosts() {
               return (
                 <div key={e.id} className="flex flex-col my-0.5 bg-neutral-700 border border-neutral-600 shadow-2xl p-1">
                   <Link
-                    href="/posts/id"
+                    href="/post/id"
                     as={`/post/${e.id}`}
                     className="flex justify-center text-amber-500 text-xl  hover:text-amber-600 bg-neutral-600 p-1"
                   >
@@ -123,7 +123,7 @@ export async function ListOfPosts() {
               return (
                 <div key={e.id} className="flex flex-col my-0.5 bg-neutral-700 border border-neutral-600 border-t-2 border-t-green-600 shadow-2xl p-1">
                   <Link
-                    href="/posts/id"
+                    href="/post/id"
                     as={`/post/${e.id}`}
                     className="flex justify-center text-xl  text-amber-500 hover:text-amber-600 bg-neutral-600 p-1"
                   >
@@ -218,7 +218,7 @@ export async function ListOfPosts() {
               return (
                 <div key={e.id} className="flex flex-col my-0.5 bg-neutral-700 border border-t-2 border-t-blue-600 border-neutral-600 shadow-2xl p-1">
                   <Link
-                    href="/posts/id"
+                    href="/post/id"
                     as={`/post/${e.id}`}
                     className="flex justify-center text-xl  text-amber-500 hover:text-amber-600 bg-neutral-600 p-1"
                   >
@@ -313,7 +313,7 @@ export async function ListOfPosts() {
               return (
                 <div key={e.id} className="flex flex-col bg-neutral-700 my-0.5 border border-t-2 border-t-yellow-600 border-neutral-600 shadow-2xl p-1">
                   <Link
-                    href="/posts/id"
+                    href="/post/id"
                     as={`/post/${e.id}`}
                     className="flex justify-center text-xl text-amber-500  hover:text-amber-600 bg-neutral-600 p-1"
                   >
