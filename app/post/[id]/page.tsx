@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { URL } from "@/utils/constants";
-import { Comment } from "./Comment";
 import axios from "axios";
 import { uploadFile } from "@/app/config/config";
 import like from "../../assets/like.svg";
