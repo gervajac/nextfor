@@ -1,7 +1,6 @@
 import { URL } from "@/utils/constants";
 import Link from "next/link";
 import axios from "axios";
-import { Ranking } from "./components/Ranking";
 
 const fetchPost = async () => {
   try {
@@ -15,11 +14,10 @@ const fetchPost = async () => {
 export default async function Home() {
   const posts = await fetchPost();
   const data = posts?.data;
-  console.log(data, "Datasio no?");
+
   return (
     <section className="flex justify-center items-start min-h-screen h-[2000px] w-full bg-neutral-800">
       <div className="flex flex-col min-w-[900px] min-h-screen bg-neutral-700">
-        {/* <Ranking /> */}
         <div className="flex justify-center flex-row space-x-1">
           <div className="flex flex-col max-w-[250px]">
             <h6 className="flex justify-center font-bold text-2xl text-amber-700">
