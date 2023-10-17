@@ -12,7 +12,7 @@ const fetchPost = async () => {
   }
 };
 
-export async function Home() {
+export default async function Home() {
   const posts = await fetchPost();
   return (
     <section className="flex justify-center items-start min-h-screen h-[2000px] w-full bg-neutral-800">
