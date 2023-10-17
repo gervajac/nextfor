@@ -8,7 +8,7 @@ const fetchPost = async () => {
       res.json()
     );
   } catch (err) {
-    console.log(err, "que es este error?");
+    console.log(err, "que es este error1?");
   }
 };
 
