@@ -1,6 +1,5 @@
 import { URL } from "@/utils/constants";
 import Link from "next/link";
-import axios from "axios";
 import { Ranking } from "./components/Ranking";
 
 const fetchPost = async () => {
@@ -13,7 +12,7 @@ const fetchPost = async () => {
   }
 };
 
-export default async function Home() {
+export async function Home() {
   const posts = await fetchPost();
   return (
     <section className="flex justify-center items-start min-h-screen h-[2000px] w-full bg-neutral-800">
