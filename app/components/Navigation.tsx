@@ -39,7 +39,7 @@ export function Navigation() {
   return (
     <nav className="bg-neutral-800 border-b-2 border-amber-500 justify-center p-4 flex items-center">
       <div className="flex items-center">
-        <Link href="/post" as={`/post`} className="flex">
+        <Link href="/" as={`/`} className="flex">
           <img
             src={logo.src}
             className="flex w-[180px] h-[40px] mr-4"

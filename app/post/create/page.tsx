@@ -24,7 +24,7 @@ export default function CreatePost() {
       postData.authorId = parsedUserData.id;
       setToken(parsedUserData.token);
     } else {
-      redirect("/post");
+      redirect("/");
     }
   }, []);
 

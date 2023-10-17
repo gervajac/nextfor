@@ -27,7 +27,7 @@ export default function Login() {
       const resp = await axios.post(`${URL}/user/login`, userData);
       console.log(resp);
       localStorage.setItem("user", JSON.stringify(resp.data.user));
-      window.location.href = "/post";
+      window.location.href = "/";
     } catch (err) {
       setErrorMsg(true);
     }
