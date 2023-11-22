@@ -125,7 +125,7 @@ export default async function Home() {
             <h6 className="flex justify-center font-bold  text-2xl text-amber-700">
               Programacion
             </h6>
-            {posts.programacion.length >= 1 ? (
+            {posts.programacion && posts.programacion.length >= 1 ? (
               posts.programacion.map((e: any) => {
                 return (
                   <div
@@ -228,7 +228,7 @@ export default async function Home() {
             <h6 className="flex justify-center font-bold text-2xl text-amber-700">
               Empleos
             </h6>
-            {posts.empleos.length >= 1 ? (
+            {posts.empleos && posts.empleos.length >= 1 ? (
               posts.empleos.map((e: any) => {
                 return (
                   <div
@@ -331,7 +331,7 @@ export default async function Home() {
             <h6 className="flex justify-center font-bold text-2xl text-amber-700">
               Cursos/Educacion
             </h6>
-            {posts.educacion.length >= 1 ? (
+            {posts.educacion && posts.educacion.length >= 1 ? (
               posts.educacion.map((e: any) => {
                 return (
                   <div
