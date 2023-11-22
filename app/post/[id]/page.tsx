@@ -1,16 +1,18 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { URL } from "@/utils/constants";
 import axios from "axios";
 import { uploadFile } from "@/app/config/config";
 import like from "../../assets/like.svg";
 import Link from "next/link";
+import spin from "../../assets/spin.svg";
 
 export default function Post({ params }: any) {
   const { id } = params;
   const [bearer, setBearer] = useState<any>({});
   const [author, setAuthor] = useState<any>({});
   const [connected, setConnected] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [fillHearth, setFillHearth] = useState(false);
   const [Hearth, setHearth] = useState(false);
   const [disabledLike, setDisabledLike] = useState(false);
@@ -66,6 +68,7 @@ export default function Post({ params }: any) {
           setFillHearth(true);
           setDisabledLike(true);
         }
+        setLoading(false);
         console.log(log);
       } catch (err) {
         console.log(err);
@@ -153,7 +156,7 @@ export default function Post({ params }: any) {
   console.log(connected);
 
   return (
-    <div className="flex flex-col min-h-screen h-auto w-auto min-w-[900px] max-w-[1000px]">
+    <div className="flex flex-col items-center min-h-screen h-auto w-auto min-w-[900px] max-w-[1000px]">
       {post.postFound && post.postFound && (
         <div
           className="bg-neutral-700 flex flex-row h-auto min-h-[200px] w-auto min-w-[600px] shadow-2xl my-1"
@@ -233,11 +236,12 @@ export default function Post({ params }: any) {
           </span>
         </h6>
       )}
-      {post.commentsFound &&
+      {!loading ? (
+        post.commentsFound &&
         post.commentsFound.map((e: any) => {
           return (
             <div
-              className="bg-neutral-700 flex flex-row max-h-[400px] shadow-2xl my-1"
+              className="bg-neutral-700 flex flex-row w-full max-h-[400px] shadow-2xl my-1"
               key={e.id}
             >
               <div className="flex flex-col items-center bg-neutral-700 w-[200px] border border-black">
@@ -268,13 +272,57 @@ export default function Post({ params }: any) {
               </div>
             </div>
           );
-        })}
+        })
+      ) : (
+        <div className="flex justify-center items-center w-20 h-20">
+          <svg
+          className="flex justify-center items-center"
+            version="1.1"
+            id="L4"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlnsXlink="http://www.w3.org/1999/xlink"
+            x="0px"
+            y="0px"
+            viewBox="0 0 100 100"
+            enable-background="new 0 0 0 0"
+            xmlSpace="preserve"
+          >
+            <circle fill="#fff" stroke="none" cx="6" cy="50" r="6">
+              <animate
+                attributeName="opacity"
+                dur="1s"
+                values="0;1;0"
+                repeatCount="indefinite"
+                begin="0.1"
+              />
+            </circle>
+            <circle fill="#fff" stroke="none" cx="26" cy="50" r="6">
+              <animate
+                attributeName="opacity"
+                dur="1s"
+                values="0;1;0"
+                repeatCount="indefinite"
+                begin="0.2"
+              />
+            </circle>
+            <circle fill="#fff" stroke="none" cx="46" cy="50" r="6">
+              <animate
+                attributeName="opacity"
+                dur="1s"
+                values="0;1;0"
+                repeatCount="indefinite"
+                begin="0.3"
+              />
+            </circle>
+          </svg>
+        </div>
+      )}
       {localComments &&
         localComments.map((e: any) => {
           return (
             <div
               key={e.id}
-              className="bg-neutral-700 flex flex-row max-h-[400px] shadow-2xl border my-1"
+              className="bg-neutral-700 flex flex-row max-h-[400px] w-full shadow-2xl border my-1"
             >
               <div className="flex flex-col items-center bg-neutral-700 w-[200px]">
                 <img
@@ -308,7 +356,7 @@ export default function Post({ params }: any) {
             </div>
           );
         })}
-      <div className="bg-neutral-600 flex flex-col h-auto max-h-[400px] shadow-2xl border my-1">
+      <div className="bg-neutral-600 flex flex-col h-auto w-full max-h-[400px] shadow-2xl border my-1">
         <div className="flex justify-center h-auto ">Agregar comentario</div>
         <div className="flex flex-row justify-between">
           <textarea
